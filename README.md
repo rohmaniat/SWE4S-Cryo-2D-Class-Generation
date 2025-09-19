@@ -1,5 +1,8 @@
 # README
 
+The paper providing the training and testing data can be found here: https://www.nature.com/articles/s41597-023-02280-2
+Their GitHub containing the data is here: https://github.com/BioinfoMachineLearning/cryoppp
+
 The PyTorch Tutorial folder contains a great tutorial for how to use PyTorch. The website online also has some useful commentary about how it works.
 
 The particle_picker.py file is where we will build, train, and test the network.
