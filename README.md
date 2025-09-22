@@ -12,8 +12,9 @@ The utils.py file is for utilities. It will contain functions like train() and t
 The controller.sh file should sort of be our control panel. We won't want to download the MASSIVE training data onto our local machines, so we'll somehow need to make this file call in that data onto the supercomputer. This file will also probably operate the particle_picker.py file (argparse, anyone?).
 
 TODO:
-- Look at the repo from that paper and see how they've provided the data. We'll need to figure out what pre-processing we'll need to do before feeding it into our NN.
-- Other stuff
+- Build an automated class that can associate images with their respective particle coordinate data. These need to be in the form of PyTorch Tensors and we'll need some method to cluster them so they can be split into training and testing datasets.
+- Figure out a way to navigate the folder system remotely (perhaps with the controller.sh file?) so the supercomputer can just do its thing. As of Jared's commit on 9/22, the filepaths for both the image and the CSV had to be added manually. An idea is to write another little script that runs through all the folders and makes lists of all the file names and where to find them. Then we could have the supercomputer just iterate through these lists.
+- High five
 
 Notes:
 - In the PyTorch tutorial, they use the nn.CrossEntropyLoss() function. This is a good loss function for classifying images. Since we'll first need to do particle picking, I think we should start with a loss function like nn.MSELoss() or nn.L1Loss() (which does mean squared error or absolute value error for regression objectives like particle picking). Once we've got that going and once we can do the image slicing step, then we could start looking at the nn.CrossEntropyLoss() function.
