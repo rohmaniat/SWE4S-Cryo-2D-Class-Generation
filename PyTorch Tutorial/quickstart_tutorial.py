@@ -18,6 +18,17 @@ training_data = datasets.FashionMNIST(
     transform=ToTensor(),
 )
 
+"""
+This is just to help me understand what's going on:
+The training_data variable is an object in the FashionMNIST class
+It is an indexable object. Each index contains an image and a label (which is an integer corresponding to a bin/category)
+
+first_training_image, first_training_label = training_data[0]
+print(f"first_training_image data type: {first_training_image.dtype}")           # Output: first_training_data data type: torch.float32
+print(f"first_training_image shape: {first_training_image.shape}")               # Output: first_training_data shape: torch.Size([1, 28, 28])
+print(f"first_training_label data type: {type(first_training_label)}")           # Output: first_training_label data type: <class 'int'>
+"""
+
 # Download test data from open datasets.
 test_data = datasets.FashionMNIST(
     root="data",
@@ -33,12 +44,28 @@ batch_size = 64
 train_dataloader = DataLoader(training_data, batch_size=batch_size)
 test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
+
+"""
+These dataloader objects are in the DataLoader class. The dataloader is not the batch itself, but it is the logic to make the batches.
+Look at the creation of the objects. You'll see that all the data (training or testing) along with batch size must be passed into the object creation.
+These dataloaders are similar to the training_data and test_data objects, but these are not indexable (they are only iterable)
+But the dataloaders (like the datasets) come in image-label tuples.
+
+for images_batch, labels_batch in train_dataloader:
+    print("--- We got a batch! ---")
+    print(f"Shape of the images batch: {images_batch.shape}")
+    print(f"Shape of the labels batch: {labels_batch.shape}")
+    
+    # We only want to see the first batch, so we stop the loop
+    break
+"""
+
 for X, y in test_dataloader:
     print(f"Shape of X [N, C, H, W]: {X.shape}")
     print(f"Shape of y: {y.shape} {y.dtype}")
     break
 
-
+"""
 # Creating Models
 
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
@@ -144,3 +171,5 @@ with torch.no_grad():
     pred = model(x)
     predicted, actual = classes[pred[0].argmax(0)], classes[y]
     print(f'Predicted: "{predicted}", Actual: "{actual}"')
+
+    """
