@@ -1,5 +1,5 @@
-
 import torch
+
 """
 from torch import nn
 from torch.utils.data import DataLoader
@@ -12,10 +12,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+'''
+# this is the core of how we will handle file paths in the supercomputer
+import os
+
+file_path = os.path.join("sample_ground_truth","")
+csv_file_path = os.path.join("sample_micrographs","")
+'''
+
+# may need to add ".." to the arguments if we put this in a subfolder
+
 # Provide name of the MRC file and its corresponding CSV file
 # Note that these lines will need to be replaced to be able to handle huge data
-file_path = r"C:\Users\jared\Desktop\Schoolwork\Software Engineering for Scientists\Semester Project\10017\micrographs\Falcon_2012_06_12-14_33_35_0.mrc"
-csv_file_path = r"C:\Users\jared\Desktop\Schoolwork\Software Engineering for Scientists\Semester Project\10017\ground_truth\particle_coordinates\Falcon_2012_06_12-14_33_35_0.csv"
+
+# Jared's file paths
+# file_path = r"C:\Users\jared\Desktop\Schoolwork\Software Engineering for Scientists\Semester Project\10017\micrographs\Falcon_2012_06_12-14_33_35_0.mrc"
+# csv_file_path = r"C:\Users\jared\Desktop\Schoolwork\Software Engineering for Scientists\Semester Project\10017\ground_truth\particle_coordinates\Falcon_2012_06_12-14_33_35_0.csv"
+
+#Rohan's file paths
+file_path = r"/Users/rohan/local_coding/10005/micrographs//Users/rohan/local_coding/10005/micrographs/stack_0002_2x_SumCorr.mrc"
+csv_file_path = r"/Users/rohan/local_coding/10005/ground_truth/particle_coordinates/stack_0002_2x_SumCorr.csv"
+
+# TODO - make the file paths relative to the project directory
 
 # First, open the mrc file
 try:
