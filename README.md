@@ -11,11 +11,27 @@ The utils.py file is for utilities. It will contain functions like train() and t
 
 The controller.sh file should sort of be our control panel. We won't want to download the MASSIVE training data onto our local machines, so we'll somehow need to make this file call in that data onto the supercomputer. This file will also probably operate the particle_picker.py file (argparse, anyone?).
 
+BUILDING THE ENVIRONMENT:
+
+`mamba env create -f particle_env.yml`
+`mamba activate particle`
+This is how we will recreate the environment in the HPC
+
+How to create a new environment (assuming that it's already active):
+`mamba env export > particle_env.yml`
+
+Don't worry about these commands for now- I need them to remember how to set up an environment
+conda create -n particle
+mamba activate particle
+conda activate my-env
+conda env export > environment.yml
+
 TODO:
 
 - Build an automated class that can associate images with their respective particle coordinate data. These need to be in the form of PyTorch Tensors and we'll need some method to cluster them so they can be split into training and testing datasets.
 - Figure out a way to navigate the folder system remotely (perhaps with the controller.sh file?) so the supercomputer can just do its thing. As of Jared's commit on 9/22, the filepaths for both the image and the CSV had to be added manually. An idea is to write another little script that runs through all the folders and makes lists of all the file names and where to find them. Then we could have the supercomputer just iterate through these lists.
 - High five
+- Make a file that will install an environment with all the softwares needed to run this code
 
 Notes:
 
