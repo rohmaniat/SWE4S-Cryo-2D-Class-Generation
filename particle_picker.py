@@ -17,6 +17,8 @@ import pandas as pd
 file_path = r"C:\Users\jared\Desktop\Schoolwork\Software Engineering for Scientists\Semester Project\10017\micrographs\Falcon_2012_06_12-14_33_35_0.mrc"
 csv_file_path = r"C:\Users\jared\Desktop\Schoolwork\Software Engineering for Scientists\Semester Project\10017\ground_truth\particle_coordinates\Falcon_2012_06_12-14_33_35_0.csv"
 
+# TODO - make the file paths relative to the project directory
+
 # First, open the mrc file
 try:
     with mrcfile.open(file_path) as mrc:
