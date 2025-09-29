@@ -48,10 +48,13 @@ conda env export > environment.yml
 Semester Project/
 ├── README.md
 ├── src/
-│   ├── my_utils.py
+│   ├── utils.py
+│   ├── controller.sh
+│   ├── particle_env.yml
+│   ├── particle_picker.py
 │   └── ...
 ├── test/
-│   └── func/
-├── notebooks/
-│   └── analysis.ipynb
+│   ├── func/
+│   │   └── func_testing.sh
+│   └── unit/
 └── Data/  (NOT in repo)
