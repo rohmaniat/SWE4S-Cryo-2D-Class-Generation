@@ -45,6 +45,7 @@ conda env export > environment.yml
 - The controller.sh file expects you to run it from the root directory (you should type bash src/controller.sh)
 - The folder layout looks like this:
 
+```
 Semester Project/
 ├── README.md
 ├── src/
@@ -58,3 +59,4 @@ Semester Project/
 │   │   └── func_testing.sh
 │   └── unit/
 └── Data/  (NOT in repo)
+```
