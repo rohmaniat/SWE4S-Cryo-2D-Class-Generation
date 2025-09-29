@@ -47,16 +47,17 @@ conda env export > environment.yml
 
 ```
 Semester Project/
-├── README.md
-├── src/
-│   ├── utils.py
-│   ├── controller.sh
-│   ├── particle_env.yml
-│   ├── particle_picker.py
-│   └── ...
-├── test/
-│   ├── func/
-│   │   └── func_testing.sh
-│   └── unit/
+├── SWE4S-Cryo-2D-Class-Generation
+│   ├── README.md
+│   ├── src/
+│   │   ├── utils.py
+│   │   ├── controller.sh
+│   │   ├── particle_env.yml
+│   │   ├── particle_picker.py
+│   │   └── ...
+│   ├── test/
+│   │   ├── func/
+│   │   │   └── func_testing.sh
+│   │   └── unit/
 └── Data/  (NOT in repo)
 ```
