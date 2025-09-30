@@ -46,7 +46,7 @@ conda env export > environment.yml
 - The folder layout looks like this:
 
 ```
-Semester Project/
+JLRparticle/
 ├── SWE4S-Cryo-2D-Class-Generation
 │   ├── README.md
 │   ├── src/
