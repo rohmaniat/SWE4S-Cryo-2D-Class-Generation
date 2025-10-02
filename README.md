@@ -6,7 +6,7 @@ The paper providing the training and testing data can be found here: <https://ww
 
 Their GitHub containing the data is here: <https://github.com/BioinfoMachineLearning/cryoppp>
 
-# File Descriptions
+## File Descriptions
 
 The PyTorch Tutorial folder contains a great tutorial for how to use PyTorch. The website online also has some useful commentary about how it works.
 
@@ -16,7 +16,7 @@ The utils.py file is for utilities. It will contain functions like train() and t
 
 The controller.sh file should sort of be our control panel. We won't want to download the MASSIVE training data onto our local machines, so we'll somehow need to make this file call in that data onto the supercomputer. This file will also probably operate the particle_picker.py file (argparse, anyone?).
 
-# BUILDING THE ENVIRONMENT
+## BUILDING THE ENVIRONMENT
 
 `mamba env create -f particle_env.yml`
 `mamba activate particle`
@@ -31,7 +31,7 @@ mamba activate particle
 conda activate my-env
 conda env export > environment.yml
 
-# TODO
+## TODO
 
 - Build an automated class that can associate images with their respective particle coordinate data. These need to be in the form of PyTorch Tensors and we'll need some method to cluster them so they can be split into training and testing datasets.
 - Figure out a way to navigate the folder system remotely (perhaps with the controller.sh file?) so the supercomputer can just do its thing. The controller.sh file should now display the first dataset when executed.
@@ -39,13 +39,13 @@ conda env export > environment.yml
 - Make a file that will install an environment with all the softwares needed to run this code
 - Make a bunch of unit and functional tests. Let's make sure we really catch all our edge cases.
 
-# Notes
+## Notes
 
 - In the PyTorch tutorial, they use the nn.CrossEntropyLoss() function. This is a good loss function for classifying images. Since we'll first need to do particle picking, I think we should start with a loss function like nn.MSELoss() or nn.L1Loss() (which does mean squared error or absolute value error for regression objectives like particle picking). Once we've got that going and once we can do the image slicing step, then we could start looking at the nn.CrossEntropyLoss() function.
 - The controller.sh file expects you to run it from the root directory (you should type bash src/controller.sh)
 - The folder layout looks like this:
 
-```
+``` plaintext
 JLRparticle/
 ├── SWE4S-Cryo-2D-Class-Generation
 │   ├── README.md
