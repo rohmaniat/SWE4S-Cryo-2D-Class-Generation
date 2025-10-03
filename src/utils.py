@@ -5,6 +5,20 @@ This script is to contain utility functions like train() and test()
 import os
 import sys
 
+def pull_micrographs(enzyme_code):
+    directory = '../Data/' + str(enzyme_code) + '/micrographs'
+    filecount = 0
+    print(directory) # prints the filepath
+
+    # looks in the micrographs directory for all files
+    # prints all file names and returns the number of files
+    for filename in os.listdir(directory):
+        if os.path.isfile(os.path.join(directory, filename)):
+            print(filename)
+            filecount += 1
+    print(filecount)
+    return filecount
+
 def data_info(enzyme_code):
     image_names = os.listdir("../Data/" + str(enzyme_code) + "/micrographs/")
     csv_names = os.listdir("../Data/" + str(enzyme_code) + "/ground_truth/particle_coordinates/")
@@ -28,3 +42,6 @@ def data_extractor(enzyme_code):
     else:
         print(f"Take a look at enzyme {enzyme_code}. There are a different number of MRC and CSV files.")
         sys.exit(3)
+
+if __name__ == "__main__":
+    pull_micrographs(10005)
