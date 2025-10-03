@@ -11,8 +11,17 @@ def data_extractor(enzyme_code):
     This function also finds any discrepencies between the number of MRC and CSV files. If there are more MRC files, it will delete all the ones that don't have a corresponding CSV file.
     """
     
-    image_names = os.listdir("../Data/" + str(enzyme_code) + "/micrographs/")
-    csv_names = os.listdir("../Data/" + str(enzyme_code) + "/ground_truth/particle_coordinates/")
+    # Gather ALL the files in the correct directory
+    all_image_files = os.listdir("../Data/" + str(enzyme_code) + "/micrographs/")
+    all_csv_files = os.listdir("../Data/" + str(enzyme_code) + "/ground_truth/particle_coordinates/")
+
+    # Only extract the mrc and csv files
+    image_names = [f for f in all_image_files if f.endswith(".mrc")]
+    csv_names = [f for f in all_csv_files if f.endswith(".csv")]
+
+    # Sort (for good practice)
+    image_names.sort()
+    csv_names.sort()
 
     # Make sure the lists are of equal length
     if len(image_names) == len(csv_names):

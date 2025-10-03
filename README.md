@@ -6,6 +6,8 @@ The paper providing the training and testing data can be found here: <https://ww
 
 Their GitHub containing the data is here: <https://github.com/BioinfoMachineLearning/cryoppp>
 
+A group created a software using CryoPPP to train a neural network for particle picking (basically exactly what we are doing). Here's their GitHub: <https://github.com/jianlin-cheng/CryoTransformer/tree/main>
+
 # File Descriptions
 
 The PyTorch Tutorial folder contains a great tutorial for how to use PyTorch. The website online also has some useful commentary about how it works.
@@ -43,11 +45,12 @@ conda env export > environment.yml
 
 - In the PyTorch tutorial, they use the nn.CrossEntropyLoss() function. This is a good loss function for classifying images. Since we'll first need to do particle picking, I think we should start with a loss function like nn.MSELoss() or nn.L1Loss() (which does mean squared error or absolute value error for regression objectives like particle picking). Once we've got that going and once we can do the image slicing step, then we could start looking at the nn.CrossEntropyLoss() function.
 - The controller.sh file expects you to run it from the root directory (you should type bash src/controller.sh)
+- Some of the MRC files have bad headers. The permissive=True flag when opening the mrc file should be able to get past this. I've wrapped it with a warnings catch so we aren't bothered with those.
 - The folder layout looks like this:
 
 ```
 JLRparticle/
-├── SWE4S-Cryo-2D-Class-Generation
+├── SWE4S-Cryo-2D-Class-Generation/    (This is the root directory from where we will run our scripts)
 │   ├── README.md
 │   ├── src/
 │   │   ├── utils.py
