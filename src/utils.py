@@ -5,6 +5,14 @@ This script is to contain utility functions like train() and test()
 import os
 import sys
 
+def data_info(enzyme_code):
+    image_names = os.listdir("../Data/" + str(enzyme_code) + "/micrographs/")
+    csv_names = os.listdir("../Data/" + str(enzyme_code) + "/ground_truth/particle_coordinates/")
+
+    print("there are {} micrographs in this dataset".format(len(image_names)))
+    print("there are {} coordinate files in this dataset".format(len(csv_names)))
+
+
 def data_extractor(enzyme_code):
     """
     The purpose of this function is to look at a single enzyme file and return two arrays: one containing the MRC file names and the other containing the CSV file names.
