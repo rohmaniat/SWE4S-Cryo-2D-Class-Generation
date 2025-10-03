@@ -41,7 +41,7 @@ csv_file_path = os.path.join("sample_micrographs","")
 # Provide name of the MRC file and its corresponding CSV file
 # Note that these lines will need to be replaced to be able to handle huge data
 
-# Relative file paths (TODO: Build a file-navigator that will go through files and feed them into the NN)
+# Relative file paths
 #img_file_path = r"..\Data\10017\micrographs\Falcon_2012_06_12-14_33_35_0.mrc"
 #csv_file_path = r"..\Data\10017\ground_truth\particle_coordinates\Falcon_2012_06_12-14_33_35_0.csv"
 
@@ -58,7 +58,7 @@ csv_file_path = os.path.join("sample_micrographs","")
 images, csvs = utils.data_extractor(enzyme_num)
 
 # Build file paths
-img_file_path = "../Data/" + str(enzyme_num) + "/micrographs/" + images[0]          # I'm just starting with the first one to make sure everything is working
+img_file_path = "../Data/" + str(enzyme_num) + "/micrographs/" + images[0]  # I'm just starting with the first one to make sure everything is working
 csv_file_path = "../Data/" + str(enzyme_num) + "/ground_truth/particle_coordinates/" + csvs[0]
 
 print(f"First image file path: {img_file_path}")
