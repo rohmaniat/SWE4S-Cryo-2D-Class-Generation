@@ -1,16 +1,20 @@
-# Our data extractor is not super working so I'm going to set up some unit tests
-# To hopefully figure out what is going wrong
+'''
+The purpose of this function is to look at a single enzyme file and return two arrays: 
+one containing the MRC file names and the other containing the CSV file names.
+'''
 
-# The purpose of this function is to look at a single enzyme file and return two arrays: 
-# one containing the MRC file names and the other containing the CSV file names.
+# python -m unittest test/unit/utils_testing.py
+    # TODO figure out why that command doesn't work
+# run from the top level directory
+# python -m unittest discover -s test/unit -p "*.py"
+    # use this command in terminal for now
 
 import sys
 
-sys.path.append('src') # noqa
+sys.path.append('src/') # noqa
 
 import unittest
 import random
-import numpy as np
 import utils
 import string
 
@@ -24,5 +28,8 @@ class TestDataExtractor(unittest.TestCase):
     
     def test_FileSearch(self):
 
-        self.assertEqual (utils.data_extractor([1, 2, 3, 4, 5]), 3)
-        self.assertEqual (my_utils.mean([10, 20, 30, 40, 50]), 30)
+        # there are 300 micrographs in the 10005 dataset
+        self.assertEqual (utils.pull_micrographs(10005), 300)
+        # there are 29 coordinate files in the 10005 dataset
+        self.assertEqual (utils.pull_coordinates(10005), 29)
+                       
