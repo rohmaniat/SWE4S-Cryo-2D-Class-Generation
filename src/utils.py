@@ -19,6 +19,7 @@ def pull_micrographs(enzyme_code):
     print(micrograph_filecount)
     return micrograph_filecount
 
+
 def pull_coordinates(enzyme_code):
     directory = '../Data/' + str(enzyme_code) + '/ground_truth/particle_coordinates'
     coords_filecount = 0
@@ -28,16 +29,18 @@ def pull_coordinates(enzyme_code):
     for filename in os.listdir(directory):
         if os.path.isfile(os.path.join(directory, filename)):
             print(filename)
-            filecount += 1
+            coords_filecount += 1
     print(coords_filecount)
     return coords_filecount
 
+
 def data_info(enzyme_code):
+    # collects the filenames from the specified folders and stores them as a list
     image_names = os.listdir("../Data/" + str(enzyme_code) + "/micrographs/")
     csv_names = os.listdir("../Data/" + str(enzyme_code) + "/ground_truth/particle_coordinates/")
 
-    print("there are {} micrographs in this dataset".format(len(image_names)))
-    print("there are {} coordinate files in this dataset".format(len(csv_names)))
+    print(len(image_names))
+    print(len(csv_names))
 
 
 def data_extractor(enzyme_code):
@@ -55,6 +58,7 @@ def data_extractor(enzyme_code):
     else:
         print(f"Take a look at enzyme {enzyme_code}. There are a different number of MRC and CSV files.")
         sys.exit(3)
+
 
 if __name__ == "__main__":
     pull_micrographs(10005)
