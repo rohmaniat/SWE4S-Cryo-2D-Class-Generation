@@ -7,6 +7,7 @@ The paper providing the training and testing data can be found here: <https://ww
 Their GitHub containing the data is here: <https://github.com/BioinfoMachineLearning/cryoppp>
 
 ## File Descriptions
+
 A group created a software using CryoPPP to train a neural network for particle picking (basically exactly what we are doing). Here's their GitHub: <https://github.com/jianlin-cheng/CryoTransformer/tree/main>
 
 The PyTorch Tutorial folder contains a great tutorial for how to use PyTorch. The website online also has some useful commentary about how it works.
