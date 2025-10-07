@@ -15,7 +15,10 @@ mkdir -p $SLURM_SUBMIT_DIR/data
 cd $SLURM_SUBMIT_DIR/data
 
 # Download the file with curl
-curl -L -O https://example.com/dataset.zip
+curl -L -O https://calla.rnet.missouri.edu/cryoppp/10061.tar.gz
+
+# Download all files from the webpage
+# wget -r -np -nH --cut-dirs=1 -P data https://calla.rnet.missouri.edu/cryoppp/10061.tar.gz
 
 # Print confirmation
 echo "Download complete: $(ls -lh dataset.zip)"
