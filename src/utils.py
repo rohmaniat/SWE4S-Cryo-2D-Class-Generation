@@ -8,29 +8,29 @@ import sys
 def pull_micrographs(enzyme_code):
     directory = '../Data/' + str(enzyme_code) + '/micrographs'
     micrograph_filecount = 0
-    print(directory) # prints the filepath
+    #print(directory) # prints the filepath
 
     # looks in the micrographs directory for all files
     # prints all file names and returns the number of files
     for filename in os.listdir(directory):
         if os.path.isfile(os.path.join(directory, filename)):
-            print(filename)
+            #print(filename)
             micrograph_filecount += 1
-    print(micrograph_filecount)
+    #print(micrograph_filecount)
     return micrograph_filecount
 
 
 def pull_coordinates(enzyme_code):
     directory = '../Data/' + str(enzyme_code) + '/ground_truth/particle_coordinates'
     coords_filecount = 0
-    print(directory) # prints the filepath
+    #print(directory) # prints the filepath
 
     # looks in ground_truth/particle_coordinates
     for filename in os.listdir(directory):
         if os.path.isfile(os.path.join(directory, filename)):
-            print(filename)
+            #print(filename)
             coords_filecount += 1
-    print(coords_filecount)
+    #print(coords_filecount)
     return coords_filecount
 
 

@@ -32,4 +32,7 @@ class TestDataExtractor(unittest.TestCase):
         self.assertEqual (utils.pull_micrographs(10005), 300)
         # there are 29 coordinate files in the 10005 dataset
         self.assertEqual (utils.pull_coordinates(10005), 29)
-                       
+
+
+if __name__ == "__main__":
+    unittest.main()
