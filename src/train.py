@@ -24,7 +24,10 @@ if __name__ == "__main__":
     )
 
     # Build the dataloader
-    data_loader = DataLoader(cryo_dataset, batch_size=4, shuffle=True, collate_fn=collate)
+    data_loader = DataLoader(cryo_dataset,
+                             batch_size=4,
+                             shuffle=True,
+                             collate_fn=collate)
 
     # Check a sample batch  (everything below this line was from Gemini)
     first_batch_of_micrographs, first_batch_of_coords = next(iter(data_loader))
@@ -33,6 +36,7 @@ if __name__ == "__main__":
     print(f"Micrographs batch shape: {first_batch_of_micrographs.shape}")
     print(f"Micrographs batch data type: {first_batch_of_micrographs.dtype}")
 
-    print(f"Coordinates batch is a list containing {len(first_batch_of_coords)} tensors:")
+    print(f"Coordinates batch is a list containing ",
+          "{len(first_batch_of_coords)} tensors:")
     for i, coords_tensor in enumerate(first_batch_of_coords):
         print(f"  - Shape of coordinates for image {i}: {coords_tensor.shape}")

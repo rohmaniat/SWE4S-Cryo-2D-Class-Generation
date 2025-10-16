@@ -14,7 +14,7 @@ def pull_micrographs(enzyme_code):
     # prints all file names and returns the number of files
     for filename in os.listdir(directory):
         if os.path.isfile(os.path.join(directory, filename)):
-            #print(filename)
+            # print(filename)
             micrograph_filecount += 1
 
     return micrograph_filecount
@@ -60,7 +60,8 @@ def data_extractor(enzyme_code):
     # Gather ALL the files in the correct directory
     image_dir = "../Data/" + str(enzyme_code) + "/micrographs/"
     all_image_files = os.listdir(image_dir)
-    csv_dir = "../Data/" + str(enzyme_code) + "/ground_truth/particle_coordinates/"
+    csv_dir = "../Data/" + str(enzyme_code)
+    csv_dir += "/ground_truth/particle_coordinates/"
     all_csv_files = os.listdir(csv_dir)
 
     # Only extract the mrc and csv files
@@ -134,7 +135,7 @@ def find_all_data():
             full_path = os.getcwd() + "/../Data/" + enzyme + "/micrographs/"
             full_path += file_names[MRC_INDEX][i]
             all_MRC.append(full_path)
-        
+
         # Build the full CSV filepaths
         for i in range(len(file_names[CSV_INDEX])):
             full_path = os.getcwd() + "/../Data/" + enzyme
