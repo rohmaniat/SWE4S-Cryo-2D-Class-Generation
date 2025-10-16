@@ -7,3 +7,4 @@ dependencies:
   - mrcfile
   - matplotlib
   - pandas
+  - pycodestyle>=2.14
