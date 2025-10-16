@@ -16,15 +16,20 @@ import argparse
 import os
 import warnings
 
-sys.path.append("src/") # noqa
+sys.path.append("src/")  # noqa
 
 import utils
 
 
 # Build the argument parser
 parser = argparse.ArgumentParser(description="Image and CSV data extraction")
-parser.add_argument("enzyme_code", type=int, help="This is the numeric label of the enzyme of interest (ex: 10017)")
-parser.add_argument("-s", "--split", type=bool, default=False, help="'True' here will command that the extracted data be split into training and testing data")
+parser.add_argument("enzyme_code",
+                    type=int,
+                    help="This is the numeric label of the enzyme of interest (ex: 10017)")
+parser.add_argument("-s", "--split",
+                    type=bool,
+                    default=False,
+                    help="'True' here will command that the extracted data be split into training and testing data")
 
 # Parse the arguments
 args = parser.parse_args()

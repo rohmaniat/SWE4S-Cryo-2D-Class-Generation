@@ -17,6 +17,7 @@ training_data = datasets.FashionMNIST(
     download=True,
     transform=ToTensor(),
 )
+print(f"training_data: {training_data}")
 
 """
 This is just to help me understand what's going on:
@@ -65,7 +66,7 @@ for X, y in test_dataloader:
     print(f"Shape of y: {y.shape} {y.dtype}")
     break
 
-"""
+
 # Creating Models
 
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
@@ -172,4 +173,3 @@ with torch.no_grad():
     predicted, actual = classes[pred[0].argmax(0)], classes[y]
     print(f'Predicted: "{predicted}", Actual: "{actual}"')
 
-    """
