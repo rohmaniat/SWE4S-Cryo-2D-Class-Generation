@@ -1,15 +1,15 @@
 import sys
 import unittest
 
-sys.path.append('src/') # noqa
+sys.path.append('src/')  # noqa
 
-#import random
+# import random
 import utils
 
 
 # This unit testing WILL be executed by GitHub actions
 class TestDataExtractor(unittest.TestCase):
-	
+
     # This is just a dummy test for now, but we'll make real tests
     def test_DummyTest(self):
 

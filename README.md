@@ -1,6 +1,6 @@
 # Overview
 
-This software is a neual network that is designed to be able to pick particles from Cryo-EM micrographs. This is an important step in the Cryo data pipeline. We will be training and testing our model on an excellent data set found in a Nature article.
+This software is a neural network that is designed to be able to pick particles from Cryo-EM micrographs. This is an important step in the Cryo data pipeline. We will be training and testing our model on an excellent data set found in a Nature article.
 
 The paper providing the training and testing data can be found here: <https://www.nature.com/articles/s41597-023-02280-2>
 
