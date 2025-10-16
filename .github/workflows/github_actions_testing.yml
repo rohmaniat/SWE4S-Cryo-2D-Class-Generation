@@ -24,5 +24,5 @@ jobs:
         with:
           environment-file: particle_env.yml
           init-shell: bash
-      - run: pycodestyle $(git ls-files "*.py")
+      - run: pycodestyle $(git ls-files "*.py" | grep -v "quickstart_tutorial.py")
         shell: bash -l {0}

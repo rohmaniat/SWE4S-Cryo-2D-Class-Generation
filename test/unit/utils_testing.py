@@ -1,13 +1,13 @@
-  # python -m unittest test/unit/utils_testing.py
-  # TODO figure out why that command doesn't work
-  # run from the top level directory
-  # python -m unittest discover -s test/unit -p "*.py"
-  # use this command in terminal for now
+# python -m unittest test/unit/utils_testing.py
+# TODO figure out why that command doesn't work
+# run from the top level directory
+# python -m unittest discover -s test/unit -p "*.py"
+# use this command in terminal for now
 
 import sys
 import unittest
 
-sys.path.append('src/') # noqa
+sys.path.append('src/')  # noqa
 
 # import random
 import utils
