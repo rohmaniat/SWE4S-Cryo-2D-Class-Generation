@@ -1,3 +1,9 @@
+'''
+The purpose of this function is to look at a single enzyme file
+and return two arrays:
+one containing the MRC file names and the other containing the CSV file names.
+'''
+
 # python -m unittest test/unit/utils_testing.py
 # TODO figure out why that command doesn't work
 # run from the top level directory
@@ -5,9 +11,10 @@
 # use this command in terminal for now
 
 import sys
-import unittest
 
 sys.path.append('src/')  # noqa
+
+import unittest
 
 # import random
 import utils
@@ -16,6 +23,7 @@ import utils
 # This unit testing is to be executed ON OUR LOCAL MACHINES
 # This file cannot be executed by GitHub Actions because it won't have
 # access to the data files
+
 class TestDataExtractor(unittest.TestCase):
 
     # read all the files in a folder
