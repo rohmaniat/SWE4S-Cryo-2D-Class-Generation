@@ -77,10 +77,9 @@ def build_file_paths(enzyme_num):
 
 
 def load_mrc_file(img_file_path):
-# Open the mrc file
-# Does
+    # Open the mrc file
     try:
-        with mrcfile.open(img_file_path) as mrc:
+        with mrcfile.open(img_file_path, permissive=True) as mrc:
             data = mrc.data         
             # Note we could do mrc.header but I don't think we need that info
 
@@ -99,13 +98,6 @@ def load_mrc_file(img_file_path):
     except Exception as e:
         print(f"An error occurred while opening the MRC file: {e}")
         sys.exit(2)
-
-
-def show_image(image_tensor):
-    plt.imshow(image_tensor.numpy(), cmap='gray') # BUG something wrong here
-    plt.title("Cryo-EM Micrograph")
-    plt.colorbar()
-    plt.show()
 
 
 def load_particle_csv(csv_file_path):
@@ -129,11 +121,22 @@ def load_particle_csv(csv_file_path):
         sys.exit(2)
 
 
+def show_image(image_tensor):
+    plt.imshow(image_tensor.numpy(), cmap='gray') # BUG something wrong here
+    plt.title("Cryo-EM Micrograph")
+    plt.colorbar()
+    plt.show()
+
+    # TODO create axis and chart titles, especially bc idk what these plots mean
+
+
 def main():
     '''Bringing all of the above functions together
     1. parse args from the command line
     2. look into the enzyme folder and make a list of csv and mrc files available
-    3. '''
+    3. load and preprocess MRC files
+    4. load and preprocess CSV files
+    5. display a simple plot of the image tensor'''
     args = parse_args()
     img_path, csv_path = build_file_paths(args.enzyme_code)
 
@@ -144,7 +147,7 @@ def main():
     print(f"Particles tensor shape: {particle_tensor.shape}")
 
     # Optionally show the image
-    # show_image(image_tensor)
+    show_image(image_tensor)
 
 
 if __name__ == '__main__':
