@@ -12,10 +12,18 @@ def pull_micrographs(enzyme_code):
 
     # looks in the micrographs directory for all files
     # prints all file names and returns the number of files
-    for filename in os.listdir(directory):
-        if os.path.isfile(os.path.join(directory, filename)):
-            # print(filename)
-            micrograph_filecount += 1
+    try:
+        for filename in os.listdir(directory):
+            if os.path.isfile(os.path.join(directory, filename)):
+                # print(filename)
+                micrograph_filecount += 1
+    except FileNotFoundError:
+        print("The enzyme code could not be accessed.")
+        sys.exit(2)
+
+    if not micrograph_filecount:
+        print("There were no micrograph files found.")
+        return ValueError
 
     return micrograph_filecount
 
