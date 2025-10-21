@@ -43,6 +43,11 @@ conda env export > environment.yml
 
 - Give more specificity to the particle_env.yml file. We want to make sure anyone can run it.
 - Make a bunch of unit and functional tests. Let's make sure we really catch all our edge cases.
+- Get the data onto our little corner of Fiji. Also upload our code and make sure it works on there.
+- Build the actual training loop. We need a file that outputs a model.smthng
+- Build a testing area. Not sure if this is gonna be in the same file as the training loop or not.
+- Build an execution file (different name?). This should take in a model and some mrc files and should spit out csv files with coordinates
+- Build a Snakemake file. Let's make this thing reproducible!
 
 ## Notes
 
