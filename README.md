@@ -48,6 +48,7 @@ conda env export > environment.yml
 - Build a testing area. Not sure if this is gonna be in the same file as the training loop or not.
 - Build an execution file (different name?). This should take in a model and some mrc files and should spit out csv files with coordinates
 - Build a Snakemake file. Let's make this thing reproducible!
+- Download the data onto Fiji. We'll need to write a script using curl or wget and put it in the right place.
 
 ## Notes
 
