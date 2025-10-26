@@ -1,10 +1,13 @@
 name: particle
 channels:
-  - defaults
   - conda-forge
+  - pkgs/main
 dependencies:
-  - pytorch
-  - mrcfile
   - matplotlib
+  - mrcfile
   - pandas
-  - pycodestyle>=2.14
+  - pycodestyle
+  - pytorch
+  - torchvision
+
+prefix: "/Users/rohan/miniforge3/envs/particle"

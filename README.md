@@ -1,4 +1,4 @@
-## Overview
+# Overview
 
 This software is a neural network that is designed to be able to pick particles from Cryo-EM micrographs. This is an important step in the Cryo data pipeline. We will be training and testing our model on an excellent data set found in a Nature article.
 
@@ -18,7 +18,7 @@ The utils.py file is for utilities. It will contain functions like train() and t
 
 **These files/folders might no longer be needed:**
 
-The particle_picker.py file is where we will build, train, and test the network.
+The particle_picker.py file is where we will build, train, and test the network. It is designed to read the .mrc image files and .csv files and incorporating them into either training or testing data sets.
 
 The PyTorch Tutorial folder contains a great tutorial for how to use PyTorch. The website online also has some useful commentary about how it works.
 
