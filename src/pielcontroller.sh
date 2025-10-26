@@ -6,13 +6,13 @@
 #SBATCH --mem=1G
 
 # Optional: load any required modules (depends on your cluster)
-# module load curl
+module load curl
 
 # Create a data directory in your scratch or working space
-mkdir -p $SLURM_SUBMIT_DIR/data
+mkdir -p $SLURM_SUBMIT_DIR/Data
 
 # Move into the data directory
-cd $SLURM_SUBMIT_DIR/data
+cd $SLURM_SUBMIT_DIR/Data
 
 # Download the file with curl
 curl -L -O https://calla.rnet.missouri.edu/cryoppp/10061.tar.gz
