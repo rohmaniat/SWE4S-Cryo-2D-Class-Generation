@@ -24,4 +24,3 @@ curl -L -O https://calla.rnet.missouri.edu/cryoppp/10061.tar.gz
 echo "Download complete: $(ls -lh dataset.zip)"
 
 # we may actually need to use a special transfer node to run this command 
-# this may be a Jes question
