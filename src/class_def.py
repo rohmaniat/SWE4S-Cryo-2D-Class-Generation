@@ -5,6 +5,7 @@ import pandas as pd
 import mrcfile
 import sys
 import warnings
+from PIL import Image
 
 sys.path.append("src/")  # noqa
 
