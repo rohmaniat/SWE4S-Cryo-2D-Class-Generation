@@ -1,7 +1,7 @@
 import sys
 import unittest
 from unittest import mock
-import mrcfile
+import torch
 
 sys.path.append('src/')  # noqa
 

@@ -1,0 +1,13 @@
+name: cryo-picker
+channels:
+  - conda-forge
+  - pkgs/main
+  - pytorch
+dependencies:
+  - mrcfile
+  - pandas
+  - python=3.11
+  - pytorch
+  - torchvision
+
+prefix: "C:\\Users\\jared\\y\\envs\\cryo-picker"
