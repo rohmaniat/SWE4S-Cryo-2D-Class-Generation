@@ -1,7 +1,6 @@
 import sys
 import unittest
 from unittest import mock
-import mrcfile
 
 sys.path.append('src/')  # noqa
 
