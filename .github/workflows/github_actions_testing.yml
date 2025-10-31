@@ -15,6 +15,7 @@ jobs:
           environment-file: particle_env.yml
           init-shell: bash
       - run: python test/unit/testing_for_github_actions.py
+        shell: bash -l {0}
   
   run_linter:
     runs-on: ubuntu-latest

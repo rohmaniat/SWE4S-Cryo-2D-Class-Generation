@@ -8,7 +8,6 @@ dependencies:
   - pandas
   - pycodestyle
   - pytorch
-  - torch
   - torchvision
 
 prefix: "/Users/rohan/miniforge3/envs/particle"
