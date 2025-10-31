@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import mrcfile
 import sys
+import warnings
 
 sys.path.append("src/")  # noqa
 
@@ -53,11 +54,15 @@ class CryoEMDataset(Dataset):
         csv_path = self.csv_paths[idx]
 
         # Load the MRC data
-        with mrcfile.open(mrc_path, permissive=True) as mrc:
-            micrograph = mrc.data.copy()
-        # Apply transforms (if they exist)
-        if self.transform:
-            micrograph = self.transform(micrograph)
+        # Catch warnings for MRC files with bad headers
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+
+            with mrcfile.open(mrc_path, permissive=True) as mrc:
+                micrograph = mrc.data.copy()
+            # Apply transforms (if they exist)
+            if self.transform:
+                micrograph = self.transform(micrograph)
 
         # Load the CSV data
         coordinates = pd.read_csv(csv_path)

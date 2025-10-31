@@ -37,6 +37,6 @@ if __name__ == "__main__":
     print(f"Micrographs batch data type: {first_batch_of_micrographs.dtype}")
 
     print(f"Coordinates batch is a list containing ",
-          "{len(first_batch_of_coords)} tensors:")
+          f"{len(first_batch_of_coords)} tensors:")
     for i, coords_tensor in enumerate(first_batch_of_coords):
         print(f"  - Shape of coordinates for image {i}: {coords_tensor.shape}")
