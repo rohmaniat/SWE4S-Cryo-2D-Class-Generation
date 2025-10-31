@@ -1,6 +1,7 @@
 import sys
 import unittest
 from unittest import mock
+import torch
 
 sys.path.append('src/')  # noqa
 

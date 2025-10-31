@@ -258,7 +258,7 @@ def train_one_epoch(model,
                 continue
 
             # Label the boxes
-            # The '0' class is reserved for background, 
+            # The '0' class is reserved for background,
             # so we use '1' for the classification.
             labels = torch.ones((len(boxes),),
                                 dtype=torch.int64,
@@ -315,7 +315,7 @@ def train_one_epoch(model,
         total_loss += batch_loss
 
         # Print loss statistics every couple of batches
-        if (i +1) % batches_before_printing == 0:
+        if (i + 1) % batches_before_printing == 0:
             avg_running_loss = running_loss / batches_before_printing
             print(f"    [Batch {i + 1:5d} / {len(data_loader)}] running ,"
                   f"loss: {avg_running_loss:.4f}")
