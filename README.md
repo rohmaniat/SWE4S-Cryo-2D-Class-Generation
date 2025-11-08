@@ -42,13 +42,14 @@ conda env export > environment.yml
 ## TODO
 
 - Give more specificity to the particle_env.yml file. We want to make sure anyone can run it.
-- Make a bunch of unit and functional tests. Let's make sure we really catch all our edge cases.
-- Get the data onto our little corner of Fiji. Also upload our code and make sure it works on there.
-- Build the actual training loop. We need a file that outputs a model.smthng
+- Make a bunch of unit and functional tests. Let's make sure we really catch all our edge cases (let's implement some catches for exit codes).
+- Upload our code to Fiji and make sure it works on there.
 - Build a testing area. Not sure if this is gonna be in the same file as the training loop or not.
-- Build an execution file (different name?). This should take in a model and some mrc files and should spit out csv files with coordinates
-- Build a Snakemake file. Let's make this thing reproducible!
-- Download the data onto Fiji. We'll need to write a script using curl or wget and put it in the right place.
+- Build a prediction file. This should take in a model and some mrc files and should spit out csv files with coordinates
+- Download the data onto Fiji. We'll need to write a script using curl or wget and put it in the right place. (DONE?)
+- Consider adding some timing methods to see if we can speed up the whole process.
+- Update the file descriptions in the README.md
+- Consider making an error calculation function. It could take our prediction.csv file and ground_truth.csv and calculate some kind of error.
 
 ## Notes
 
