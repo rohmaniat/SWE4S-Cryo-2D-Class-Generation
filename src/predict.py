@@ -208,7 +208,7 @@ if __name__ == "__main__":
             print(f"\nPlease provide them via the command line or ",
                   "a --config file.\n")
             parser.print_help()
-            exit()
+            exit(1)  # Exit code 1 for missing required args
 
     # Set device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -221,6 +221,7 @@ if __name__ == "__main__":
         print("Model loaded successfully!\n")
     except Exception as e:
         print(f"Could not load model: {e}")
+        exit(2)  # Exit code 2 for not being able to upload the model
 
     # Load and transform data
     print(f"Loading and processing micrograph: {args.mrc_file}")
@@ -292,15 +293,15 @@ if __name__ == "__main__":
             try:
                 gt_df = pd.read_csv(args.ground_truth_csv)
 
-                if ("X-Coordinate" in gt_df.columns and 
+                if ("X-Coordinate" in gt_df.columns and
                     "Y-Coordinate" in gt_df.columns):
-                    gt_df = gt_df.rename(columns={
-                        "X-Coordinate": 'coord_x',
-                        "Y-Coordinate": "coord_y"
-                    })
-                    print(f"Loaded {len(gt_df)} ground truth",
+                        gt_df = gt_df.rename(columns={
+                            "X-Coordinate": 'coord_x',
+                            "Y-Coordinate": "coord_y"
+                        })
+                        print(f"Loaded {len(gt_df)} ground truth",
                           f"coordinates from {args.ground_truth_csv}")
-                elif ('coord_x' not in gt_df.columns or 
+                elif ('coord_x' not in gt_df.columns or
                       "coord_y" not in gt_df.columns):
                     print(f"Warning: Ground truth CSV ",
                           f"({args.ground_truth_csv})")

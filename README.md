@@ -48,7 +48,6 @@ conda env export > environment.yml
 - Build a prediction file. This should take in a model and some mrc files and should spit out csv files with coordinates
 - Download the data onto Fiji. We'll need to write a script using curl or wget and put it in the right place. (DONE?)
 - Consider adding some timing methods to see if we can speed up the whole process.
-- Build some visualization tools to show how accurate our model is.
 - Update the file descriptions in the README.md
 - Consider making an error calculation function. It could take our prediction.csv file and ground_truth.csv and calculate some kind of error.
 
