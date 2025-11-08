@@ -34,7 +34,9 @@ def load_model(model_path, device):
                                                       NUM_CLASSES)
 
     # Load in the saved weights
-    model.load_state_dict(torch.load(model_path, map_location=device, weights_only=True))
+    model.load_state_dict(torch.load(model_path,
+                                     map_location=device,
+                                     weights_only=True))
 
     # Set to evaluation mode and move to the device
     model.to(device)
@@ -60,9 +62,9 @@ def load_and_transform_mrc(mrc_path, device):
             image_data = mrc.data
             if image_data.ndim > 2:
                 print(f"Warning: Input is a stack ({image_data.shape}).",
-                    "Using first image only.")
+                      "Using first image only.")
                 image_data = image_data[0]
-    
+
     # Store original dimensions for scaling coordinates later
     original_height, original_width = image_data.shape
 
@@ -80,7 +82,10 @@ def load_and_transform_mrc(mrc_path, device):
     return [image_tensor], original_height, original_width
 
 
-def create_visualization(mrc_path, predictions_df, ground_truth_df, output_image_path):
+def create_visualization(mrc_path,
+                         predictions_df,
+                         ground_truth_df,
+                         output_image_path):
     """
     Saves a PNG of the micrograph with ground truth and predictions plotted
     """
@@ -91,7 +96,7 @@ def create_visualization(mrc_path, predictions_df, ground_truth_df, output_image
             image_data = mrc.data
             if image_data.ndim > 2:
                 image_data = image_data[0]
-    
+
     # Normalize for plotting
     img_min = image_data.min()
     img_max = image_data.max()
@@ -115,7 +120,7 @@ def create_visualization(mrc_path, predictions_df, ground_truth_df, output_image
             linewidths=2,
             alpha=0.7
         )
-    
+
     # Plot predictions
     if not predictions_df.empty:
         ax.scatter(
@@ -127,7 +132,7 @@ def create_visualization(mrc_path, predictions_df, ground_truth_df, output_image
             linewidths=2,
             alpha=0.7
         )
-    
+
     # Finalize and save
     ax.legend()
     ax.set_axis_off()
@@ -138,10 +143,11 @@ def create_visualization(mrc_path, predictions_df, ground_truth_df, output_image
 if __name__ == "__main__":
     # Build configuration parser
     config = configparser.ConfigParser()
-    
+
     # Build argument parser
     parser = argparse.ArgumentParser(
-        description="Predict particles from micrographs using a provided model."
+        description="Predict particles from micrographs using "
+        + "a provided model."
     )
     parser.add_argument("--config", type=str,
                         help="Path to a .ini configuration file.")
@@ -153,11 +159,14 @@ if __name__ == "__main__":
                         default="src/models/my_model.pt",
                         help="Path to trained .pt model file.")
     parser.add_argument("--threshold", type=float, default=0.7,
-                        help="Confidence threshold for keeping predictions (0.0 to 1.0).")
+                        help="Confidence threshold for keeping predictions "
+                        + "(0.0 to 1.0).")
     parser.add_argument("--output_image", type=str, default=None,
-                        help="[Optional] Path to save a PNG visualizing the predictions.")
+                        help="[Optional] Path to save a PNG "
+                        + "visualizing the predictions.")
     parser.add_argument("--ground_truth_csv", type=str, default=None,
-                        help="[Optional] Path to the ground truth CSV for visualization.")
+                        help="[Optional] Path to the ground truth "
+                        + "CSV for visualization.")
     args = parser.parse_args()
 
     # Manage passed configuration file
@@ -168,7 +177,7 @@ if __name__ == "__main__":
             cli_val = getattr(args, key)  # Get value from the command line
             if cli_val is not None:
                 return cli_val  # Return CLI value if it exists
-            
+
             try:
                 config_val = config.get(section, key)
                 if config_val == "":
@@ -176,23 +185,28 @@ if __name__ == "__main__":
                 return type_func(config_val)
             except (configparser.NoOptionError, configparser.NoSectionError):
                 return None
-        
+
         # Apply this logic for all arguments
         args.mrc_file = get_config_val('paths', 'mrc_file', str)
         args.output_csv = get_config_val('paths', 'output_csv', str)
         args.model_path = get_config_val('paths', 'model_path', str)
         args.output_image = get_config_val('paths', 'output_image', str)
-        args.ground_truth_csv = get_config_val('paths', 'ground_truth_csv', str)
+        args.ground_truth_csv = get_config_val('paths', 'ground_truth_csv',
+                                               str)
         args.threshold = get_config_val('settings', 'threshold', float)
-    
-    # Validate that all requred arguments are present (either from the CLI or config.ini)
+
+    # Validate that all requred arguments are present
+    # (either from the CLI or config.ini)
     required_args = ['mrc_file', 'output_csv', 'model_path', 'threshold']
-    missing_args = [arg for arg in required_args if getattr(args, arg) is None]
+    missing_args = [
+        arg for arg in required_args if getattr(args, arg) is None
+    ]
     if missing_args:
         print(f"\nError: The following required arguments are missing:")
         for arg in missing_args:
             print(f"  --{arg}")
-            print(f"\nPlease provide them via the command line or a --config file.\n")
+            print(f"\nPlease provide them via the command line or ",
+                  "a --config file.\n")
             parser.print_help()
             exit()
 
@@ -234,6 +248,8 @@ if __name__ == "__main__":
     final_boxes = boxes[keep_mask].cpu().numpy()
     final_scores = scores[keep_mask].cpu().numpy()
 
+    # Initialize df as an empty DataFrame first
+    df = pd.DataFrame(columns=['coord_x', 'coord_y', 'confidence'])
 
     if final_boxes.shape[0] > 0:
         # Scale coordinates from resized (800x800) to original
@@ -253,19 +269,19 @@ if __name__ == "__main__":
         df_data = {
             'coord_x': scaled_center_x.astype(int),
             'coord_y': scaled_center_y.astype(int),
-            'confidence_score': final_scores
+            'confidence': final_scores
         }
         df = pd.DataFrame(df_data)
         df.to_csv(args.output_csv, index=False)
-        print(f"Success! Saved {len(df)} particle coordinates to {args.output_csv}")
+        print(f"Success! Saved {len(df)} particle coordinates",
+              f"to {args.output_csv}")
 
     else:
         print(f"No particles found with confidence above {args.threshold}")
-        # Save an empty CSV
-        pd.DataFrame(columns=['coord_x', 'coord_y', 'confidence_score']).to_csv(
-            args.output_csv, index=False
-        )
-    
+
+    # Save data
+    df.to_csv(args.output_csv, index=False)
+
     # Visualization (if requested)
     if args.output_image:
         print(f"\nCreating visualization at {args.output_image}...")
@@ -276,24 +292,30 @@ if __name__ == "__main__":
             try:
                 gt_df = pd.read_csv(args.ground_truth_csv)
 
-                if "X-Coordinate" in gt_df.columns and "Y-Coordinate" in gt_df.columns:
+                if ("X-Coordinate" in gt_df.columns and 
+                    "Y-Coordinate" in gt_df.columns):
                     gt_df = gt_df.rename(columns={
                         "X-Coordinate": 'coord_x',
                         "Y-Coordinate": "coord_y"
                     })
-                    print(f"Loaded and renamed {len(gt_df)} ground truth coordinates from {args.ground_truth_csv}")
-                elif 'coord_x' not in gt_df.columns or "coord_y" not in gt_df.columns:
-                    print(f"Warning: Ground truth CSV ({args.ground_truth_csv})")
-                    print(f"         does not contain 'X-Coordinate'/'Y-Coordinate'.")
+                    print(f"Loaded {len(gt_df)} ground truth",
+                          f"coordinates from {args.ground_truth_csv}")
+                elif ('coord_x' not in gt_df.columns or 
+                      "coord_y" not in gt_df.columns):
+                    print(f"Warning: Ground truth CSV ",
+                          f"({args.ground_truth_csv})")
+                    print(f"         does not contain 'X-Coordinate'/",
+                          "'Y-Coordinate'.")
                     print(f"         Ground truth will not be plotted")
                     gt_df = None
                 else:
-                    print(f"Loaded {len(gt_df)} ground truth coordinates from {args.ground_truth_csv}.")
+                    print(f"Loaded {len(gt_df)} ground truth coordinates",
+                          f"from {args.ground_truth_csv}.")
 
             except Exception as e:
                 print(f"Warning: Could not load ground truth CSV: {e}")
                 print("Will proceed with predictions only.")
-        
+
         # Call the visualization function
         create_visualization(
             mrc_path=args.mrc_file,
