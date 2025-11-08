@@ -86,6 +86,7 @@ def create_visualization(mrc_path,
                          predictions_df,
                          ground_truth_df,
                          output_image_path):
+    # FIXME: add threshold argument
     """
     Saves a PNG of the micrograph with ground truth and predictions plotted
     """
@@ -293,14 +294,14 @@ if __name__ == "__main__":
             try:
                 gt_df = pd.read_csv(args.ground_truth_csv)
 
-                if ("X-Coordinate" in gt_df.columns and
-                    "Y-Coordinate" in gt_df.columns):
-                        gt_df = gt_df.rename(columns={
-                            "X-Coordinate": 'coord_x',
-                            "Y-Coordinate": "coord_y"
-                        })
-                        print(f"Loaded {len(gt_df)} ground truth",
-                          f"coordinates from {args.ground_truth_csv}")
+                required_cols = {"X-Coordinate", "Y-Coordinate"}
+                if required_cols.issubset(gt_df.columns):
+                    gt_df = gt_df.rename(columns={
+                        "X-Coordinate": 'coord_x',
+                        "Y-Coordinate": "coord_y"
+                    })
+                    print(f"Loaded {len(gt_df)} ground truth",
+                            f"coordinates from {args.ground_truth_csv}")
                 elif ('coord_x' not in gt_df.columns or
                       "coord_y" not in gt_df.columns):
                     print(f"Warning: Ground truth CSV ",
