@@ -301,7 +301,7 @@ if __name__ == "__main__":
                         "Y-Coordinate": "coord_y"
                     })
                     print(f"Loaded {len(gt_df)} ground truth",
-                            f"coordinates from {args.ground_truth_csv}")
+                          f"coordinates from {args.ground_truth_csv}")
                 elif ('coord_x' not in gt_df.columns or
                       "coord_y" not in gt_df.columns):
                     print(f"Warning: Ground truth CSV ",
