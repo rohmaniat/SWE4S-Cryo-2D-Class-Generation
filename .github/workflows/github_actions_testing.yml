@@ -6,6 +6,17 @@ on:
     branches: [ main ]
 
 jobs:
+  run_func_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: particle_env.yml
+          init-shell: bash
+      - run: bash test/func/func_testing.sh
+        shell: bash -l {0}
+  
   run_unit_tests:
     runs-on: ubuntu-latest
     steps:
