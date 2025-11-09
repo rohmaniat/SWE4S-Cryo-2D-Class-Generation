@@ -7,14 +7,13 @@ sys.path.append('src/')  # noqa
 
 # import random
 import utils
+import predict
 
 
 # This unit testing WILL be executed by GitHub actions
 class TestDataExtractor(unittest.TestCase):
 
     def test_FileNotFound_error(self):
-
-        self.assertEqual(1, 1)  # dummy test I'll delete soon
 
         # simulate a parsing error for enzyme_code = 1
         with self.assertRaises(SystemExit) as cm:
