@@ -9,5 +9,3 @@ dependencies:
   - pycodestyle
   - pytorch
   - torchvision
-
-prefix: "/Users/rohan/miniforge3/envs/particle"
