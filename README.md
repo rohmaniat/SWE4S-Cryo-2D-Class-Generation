@@ -26,28 +26,21 @@ The controller.sh file should sort of be our control panel. We won't want to dow
 
 ## BUILDING THE ENVIRONMENT
 
+The environment is called "particle" and can be set up using the following commands:
 `mamba env create -f particle_env.yml`
 `mamba activate particle`
-This is how we will recreate the environment in the HPC
-
-How to create a new environment (assuming that it's already active):
-`mamba env export > particle_env.yml`
-
-Don't worry about these commands for now- I need them to remember how to set up an environment
-conda create -n particle
-mamba activate particle
-conda activate my-env
-conda env export > environment.yml
 
 ## TODO
 
 - Give more specificity to the particle_env.yml file. We want to make sure anyone can run it.
 - Make a bunch of UNIT tests. Let's make sure we really catch all our edge cases (let's implement some catches for exit codes).
 - Upload our code to Fiji and make sure it works on there.
-- Download the data onto Fiji. We'll need to write a script using curl or wget and put it in the right place. (DONE?)
+
 - Consider adding some timing methods to see if we can speed up the whole process.
 - Update the file descriptions in the README.md
 - Consider making an error calculation function. It could take our prediction.csv file and ground_truth.csv and calculate some kind of error.
+
+- can we write a section of the README that describes what code users should run?
 
 ## Notes
 

@@ -9,3 +9,4 @@ dependencies:
   - pycodestyle
   - pytorch
   - torchvision
+  - python=3.11
