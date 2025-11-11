@@ -8,6 +8,14 @@ Their GitHub containing the data is here: <https://github.com/BioinfoMachineLear
 
 A group created a software using CryoPPP to train a neural network for particle picking (basically exactly what we are doing). Here's their GitHub: <https://github.com/jianlin-cheng/CryoTransformer/tree/main>
 
+## Setting up the file system
+
+I think I can make a Snakemake file for this eventually
+
+Outside of this repo, create a directory called Data/ with all micrograph data (organized into subdirectories called micrographs/ and ground_truth/particle_coordinates/). **This is essential for reading the files in the training step.**
+
+Should we specify a test that other users can run to validate our model?
+
 ## File Descriptions
 
 The class_def.py file provides the class definition for the Dataset object.

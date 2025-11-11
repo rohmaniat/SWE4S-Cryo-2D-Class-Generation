@@ -12,6 +12,10 @@
 #SBATCH --mem=32G
 ##SBATCH --gres=gpu:1
 
+'''
+This code is for testing SLURM job submission.
+'''
+
 ## gather system information
 hostname
 date
