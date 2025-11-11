@@ -20,8 +20,12 @@ The output is... we don/t know yet!
 
 echo Starting training job %j on $(hostname) at $(date)
 
+conda activate particle
+
 python train.py
 
 date
+deactivate
+
 echo Training job completed
 
