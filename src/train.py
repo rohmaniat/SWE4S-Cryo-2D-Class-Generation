@@ -114,7 +114,8 @@ if __name__ == "__main__":
     print(f"\n---- Training finished! ----\n")
 
     # Now save the model
-    model_name = "my_model"
+    model_name = "my_model_2"
+    # TODO: need a way of changing model name to avoid overwriting
     model_save_path = "src/models/" + model_name
     torch.save(model.state_dict(), model_save_path)
     print(f"Model saved to: {model_save_path}")
