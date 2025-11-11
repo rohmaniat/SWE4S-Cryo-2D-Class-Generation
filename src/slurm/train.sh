@@ -7,8 +7,8 @@
 #SBATCH --output=src/slurm/out/training_%j.out
 #SBATCH --error=src/slurm/out/training_%j.err
 #SBATCH --time=24:00:00
-#SBATCH --nodes=4
-#SBATCH --ntasks=6
+#SBATCH --nodes=1
+#SBATCH --ntasks=8
 #SBATCH --mem=32G
 ##SBATCH --gres=gpu:1
 

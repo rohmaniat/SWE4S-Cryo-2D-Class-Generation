@@ -1,0 +1,9 @@
+/tmp/slurmd/job10833848/slurm_script: line 19: 
+This script is for training the model using SLURM job submission.
+It will use all available data in the ../Data/ directory for now.
+The output is... we don/t know yet!
+: No such file or directory
+Traceback (most recent call last):
+  File "/scratch/Shares/JLR_particle_csci6118/SWE4S-Cryo-2D-Class-Generation/src/train.py", line 3, in <module>
+    from torchvision import transforms
+ModuleNotFoundError: No module named 'torchvision'

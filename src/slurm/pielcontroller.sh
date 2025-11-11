@@ -2,7 +2,8 @@
 #SBATCH --partition=titan
 #SBATCH --job-name=download_data
 #SBATCH --output=Data/log_files/download_data_%j.log
-#SBATCH --time=06:00:00
+#SBATCH --error=Data/log_files/download_data_%j.err
+#SBATCH --time=03:00:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=roto9457@colorado.edu
 #SBATCH --nodes=1
@@ -21,13 +22,46 @@ mkdir -p $SLURM_SUBMIT_DIR/Data
 # Move into the data directory
 cd $SLURM_SUBMIT_DIR/Data
 
+# First File
+
+FILE_URL="https://calla.rnet.missouri.edu/cryoppp/11183.tar.gz"
+FILE_NAME="11183.tar.gz"
+
 # Download the file with curl
-curl -L -O https://calla.rnet.missouri.edu/cryoppp/10005.tar.gz
+curl -L -O $FILE_URL
 
 # Download all files from the webpage
 # wget -r -np -nH --cut-dirs=1 -P data https://calla.rnet.missouri.edu/cryoppp/10061.tar.gz
 
 # Print confirmation
-echo "Download complete: $(ls -lh)"
+echo "Download complete: $(ls -lh $FILE_NAME)"
 
-# we may actually need to use a special transfer node to run this command 
+# Extract the .tar.gz file
+#tar -xvzf "Data/$FILE_NAME"
+
+#echo "Extraction complete. $(ls -lh $FILE_NAME)" 
+
+# Second File
+
+FILE_URL="https://calla.rnet.missouri.edu/cryoppp/11056.tar.gz"
+FILE_NAME="11056.tar.gz"
+
+# Download the file with curl
+curl -L -O $FILE_URL
+
+# Download all files from the webpage
+# wget -r -np -nH --cut-dirs=1 -P data https://calla.rnet.missouri.edu/cryoppp/10061.tar.gz
+
+# Print confirmation
+echo "Download complete: $(ls -lh $FILE_NAME)"
+i
+# Extract the .tar.gz file
+#tar -xvzf "Data/$FILE_NAME"
+
+#echo "Extraction complete. $(ls -lh $FILE_NAME)" 
+
+#Finish Output
+echo "Process complete"
+date
+uptime
+
