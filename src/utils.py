@@ -67,7 +67,7 @@ def data_extractor(enzyme_code):
     all_image_files = os.listdir(image_dir)
     csv_dir = "../Data/" + str(enzyme_code)
     csv_dir += "/ground_truth/particle_coordinates/"
-    
+
     # there are some data files with no csv files? (10075)
     if csv_dir:
         all_csv_files = os.listdir(csv_dir)
