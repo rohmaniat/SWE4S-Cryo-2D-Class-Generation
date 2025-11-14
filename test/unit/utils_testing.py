@@ -1,4 +1,6 @@
 '''
+DELETE BEFORE MAKING PUBLIC
+
 The purpose of this function is to look at a single enzyme file
 and return two arrays:
 one containing the MRC file names and the other containing the CSV file names.
