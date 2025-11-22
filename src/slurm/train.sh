@@ -10,7 +10,7 @@
 #SBATCH --nodes=4
 #SBATCH --ntasks=6
 #SBATCH --mem=32G
-#SBATCH --gres=gpu:1
+##SBATCH --gres=gpu:1
 
 '''
 This script is for training the model using SLURM job submission.
@@ -22,7 +22,7 @@ echo Starting training job %j on $(hostname) at $(date)
 
 conda activate particle
 
-python train.py
+python src/train.py
 
 date
 deactivate

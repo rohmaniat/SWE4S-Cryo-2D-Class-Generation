@@ -152,7 +152,11 @@ def find_all_data():
 
     # Run through for each available enzyme
     for enzyme in enzymes_available:
-        file_names = data_extractor(enzyme)
+        try:   
+            file_names = data_extractor(enzyme)
+        except Exception as e:
+            print(f"Extractor failed on enzyme {enzyme}")
+            continue
 
         # if the data extractor fails on that dataset
         if file_names is None:
