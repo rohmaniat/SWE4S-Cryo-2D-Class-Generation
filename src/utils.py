@@ -62,10 +62,27 @@ def data_extractor(enzyme_code):
     don't have a corresponding CSV file.
     """
 
-    # Gather ALL the files in the correct directory
+    # These are the subdirectories where we find our image and coordinate data
     image_dir = "../Data/" + str(enzyme_code) + "/micrographs/"
-    all_image_files = os.listdir(image_dir)
     csv_dir = "../Data/" + str(enzyme_code)
+
+    # Check that these directories exist for the given enzyme code
+    if not os.path.exists(image_dir):
+        print(
+            f"[Warning] Directory not found: {image_dir}. "
+            f"Skipping enzyme {enzyme_code}.\n"
+        )
+        return None
+
+    if not os.path.exists(csv_dir):
+        print(
+            f"[Warning] Directory not found: {csv_dir}. "
+            f"Skipping enzyme {enzyme_code}.\n"
+        )
+        return None
+
+    # Gather ALL the files in the correct directory
+    all_image_files = os.listdir(image_dir)
     csv_dir += "/ground_truth/particle_coordinates/"
     all_csv_files = os.listdir(csv_dir)
 
