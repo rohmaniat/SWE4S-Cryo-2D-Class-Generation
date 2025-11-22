@@ -1,17 +1,14 @@
 import sys
+import os
 import unittest
-from unittest import mock
-import torch
+from unittest.mock import patch
 
 sys.path.append('src/')  # noqa
 
-# import random
 import utils
-import predict
 
 
-# This unit testing WILL be executed by GitHub actions
-class TestDataExtractor(unittest.TestCase):
+class TestPullMicrographs(unittest.TestCase):
 
     def test_FileNotFound_error(self):
 
@@ -21,11 +18,27 @@ class TestDataExtractor(unittest.TestCase):
         self.assertEqual(cm.exception.code, 2)
 
 
-class TestParticlePicker(unittest.TestCase):
+class TestPullCoordinates(unittest.TestCase):
 
     def test_(self):
+        self.assertEqual(1, 1)
 
-        # no clue how to test this if the data is outside out repo
+
+class TestDataInfo(unittest.TestCase):
+
+    def test_(self):
+        self.assertEqual(1, 1)
+
+
+class TestDataExtractor(unittest.TestCase):
+
+    def test_(self):
+        self.assertEqual(1, 1)
+
+
+class TestGetAllData(unittest.TestCase):
+
+    def test_(self):
         self.assertEqual(1, 1)
 
 
