@@ -1,12 +1,6 @@
 __pycache__/
 
-*.log
-*.tmp
 *.out
 *.err
-
-Miniconda3-py39_25.5.1-0-Linux-x86_64.sh
-Miniconda3-py311_25.9.1-1-Linux-x86_64.sh
-Miniconda3-latest-Linux-x86_64.sh.1
-Miniconda3-latest-Linux-x86_64.sh
-Miniconda3-latest-Linux-aarch64.sh
+*.log
+*.tmp
