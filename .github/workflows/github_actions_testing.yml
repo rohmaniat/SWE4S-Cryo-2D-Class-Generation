@@ -27,7 +27,7 @@ jobs:
         with:
           environment-file: particle_env.yml
           init-shell: bash
-      - run: python test/unit/testing_for_github_actions.py
+      - run: python test/unit/utils_tests.py
         shell: bash -l {0}
   
   run_linter:
