@@ -59,17 +59,36 @@ The environment is called "particle" and can be set up using the following comma
 
 ``` plaintext
 JLRparticle/
-├── SWE4S-Cryo-2D-Class-Generation/    (This is the root directory from where we will run our scripts)
-│   ├── README.md
-│   ├── src/
-│   │   ├── utils.py
-│   │   ├── controller.sh
-│   │   ├── particle_env.yml
-│   │   ├── particle_picker.py
-│   │   └── ...
-│   ├── test/
-│   │   ├── func/
-│   │   │   └── func_testing.sh
-│   │   └── unit/
+├── cryo-picker.yml
+├── particle_env.yml
+├── README.md
+├── src
+│   ├── class_def.py
+│   ├── config.ini
+│   ├── images
+│   │   └── (images)
+│   ├── models
+│   │   ├── (models)
+│   ├── predict.py
+│   ├── predictions
+│   │   └── (predictions)
+│   ├── slurm
+│   │   ├── pielcontroller.sh
+│   │   ├── sample.sh
+│   │   └── train.sh
+│   ├── train.py
+│   └── utils.py
+├── ssshtest
+└── test
+    │   └── __init__.cpython-313.pyc
+    ├── func
+    │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.csv
+    │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.mrc
+    │   ├── func_testing.sh
+    │   └── standard_config.ini
+    └── unit
+        ├── epoch_training_tests.py
+        ├── fake_model.py
+        └── utils_tests.py
 └── Data/  (NOT in repo)
 ```
