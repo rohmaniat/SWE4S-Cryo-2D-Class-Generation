@@ -21,6 +21,7 @@ class FakeDetectionModel(nn.Module):
             "loss_box_reg": loss2,
         }
 
+
 class FakeCryoDataset(Dataset):
     def __len__(self):
         return 4   # small for testing
@@ -33,7 +34,8 @@ class FakeCryoDataset(Dataset):
         coords = torch.tensor([[2, 2], [5, 5]], dtype=torch.float32)
 
         return image, coords
-    
+
+
 def fake_collate(batch):
     images = [item[0] for item in batch]
     coords = [item[1] for item in batch]

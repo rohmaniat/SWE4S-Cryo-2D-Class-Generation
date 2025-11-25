@@ -12,7 +12,6 @@ class TestPullMicrographs(unittest.TestCase):
 
     @patch('os.listdir')
     @patch('os.path.isfile')
-
     def test_FileNotFound(self, mock_isfile, mock_listdir):
         # make sure that None is raised when no MRC files are found
 
@@ -21,7 +20,6 @@ class TestPullMicrographs(unittest.TestCase):
 
     @patch('os.listdir')
     @patch('os.path.isfile')
-
     def test_pull_micrograph_files(self, mock_isfile, mock_listdir):
         # using a mock directory, check that pull_micrographs file
         # counting is working
@@ -35,7 +33,6 @@ class TestPullMicrographs(unittest.TestCase):
 
     @patch('os.listdir')
     @patch('os.path.isfile')
-
     def test_pull_micrograph_nofiles(self, mock_isfile, mock_listdir):
         # when there are no files, there should be a ValueError
 
@@ -50,7 +47,6 @@ class TestPullCoordinates(unittest.TestCase):
 
     @patch('os.listdir')
     @patch('os.path.isfile')
-
     def test_withfiles(self, mock_isfile, mock_listdir):
         # make sure that pull_coordinates is reading the csv files
 
@@ -62,7 +58,6 @@ class TestPullCoordinates(unittest.TestCase):
 
     @patch('os.listdir')
     @patch('os.path.isfile')
-
     def test_empty_directory(self, mock_isfile, mock_listdir):
         # test pull_coordinates on an empty directory
 
@@ -74,7 +69,6 @@ class TestPullCoordinates(unittest.TestCase):
 
     @patch('os.listdir')
     @patch('os.path.isfile')
-
     def test_FileNotFound(self, mock_isfile, mock_listdir):
         # Setup the mock to raise a FileNotFoundError
 
@@ -86,7 +80,6 @@ class TestPullCoordinates(unittest.TestCase):
 class TestDataInfo(unittest.TestCase):
 
     @patch("os.listdir")
-
     def test_data_info(self, mock_listdir):
         # test data_info in parsing CSV and MRC files
 
@@ -94,14 +87,13 @@ class TestDataInfo(unittest.TestCase):
         mock_listdir.side_effect = [
             ["a.mrc", "b.mrc", "c.mrc"],       # micrographs
             ["a.csv", "b.csv", "c.csv"]]       # coordinates
-        
+
         imgs, csvs = utils.data_info("EnzymeF")
 
         self.assertEqual(imgs, ["a.mrc", "b.mrc", "c.mrc"])
         self.assertEqual(csvs, ["a.csv", "b.csv", "c.csv"])
 
     @patch("os.listdir")
-
     def test_empty_folders(self, mock_listdir):
         # test the function on empty file lists
         # should show up empty (which is handled later in the code)
@@ -117,7 +109,6 @@ class TestDataInfo(unittest.TestCase):
 class TestDataExtractor(unittest.TestCase):
 
     @patch('os.listdir')
-
     def test_missing_image_dir(self, mock_exists):
         # Make image_dir return False, csv_dir return True
         mock_exists.side_effect = [False, True]
@@ -126,7 +117,6 @@ class TestDataExtractor(unittest.TestCase):
         self.assertIsNone(result)
 
     @patch('os.listdir')
-
     def test_missing_csv_dir(self, mock_exists):
         # Make image_dir return True, csv_dir return False
         mock_exists.side_effect = [True, False]
@@ -136,7 +126,6 @@ class TestDataExtractor(unittest.TestCase):
 
     @patch('os.listdir')
     @patch("utils.os.path.exists")
-
     def test_extractor(self, mock_exists, mock_listdir):
         # All MRC files should have a CSV file of the same name
         # Organize and return this data
@@ -145,13 +134,12 @@ class TestDataExtractor(unittest.TestCase):
         mock_listdir.side_effect = [
             ["a.mrc", "b.mrc"],
             ["a.csv", "b.csv"]]
-        
+
         result = utils.data_extractor("EnzymeJ")
         self.assertEqual(result, (["a.mrc", "b.mrc"], ["a.csv", "b.csv"]))
 
     @patch('os.listdir')
     @patch("utils.os.path.exists")
-
     def test_extractor_matching(self, mock_exists, mock_listdir):
         # if there are MRC files with no CSV, remove them from analysis
 
@@ -159,7 +147,7 @@ class TestDataExtractor(unittest.TestCase):
         mock_listdir.side_effect = [
             ["a.mrc", "b.mrc", "c.mrc"],
             ["a.csv", "b.csv"]]
-        
+
         result = utils.data_extractor("EnzymeK")
         self.assertEqual(result, (["a.mrc", "b.mrc"], ["a.csv", "b.csv"]))
 
@@ -169,11 +157,10 @@ class TestGetAllData(unittest.TestCase):
     @patch("utils.data_extractor")
     @patch("utils.os.getcwd")
     @patch("utils.os.listdir")
-
     def test_find_all_data_normal(
-        self, mock_listdir, mock_getcwd, mock_extractor):
-    # making a mock filepath for EnzymeL and EnzymeM
-    # should return matching lists for both
+            self, mock_listdir, mock_getcwd, mock_extractor):
+        # making a mock filepath for EnzymeL and EnzymeM
+        # should return matching lists for both
 
         mock_getcwd.return_value = "/home/user/project"
         mock_listdir.return_value = ["enzymeL", "enzymeM"]
@@ -191,10 +178,12 @@ class TestGetAllData(unittest.TestCase):
         ]
 
         expected_csv = [
-            "/home/user/project/../Data/enzymeL/ground_truth/particle_coordinates/a1.csv",
-            "/home/user/project/../Data/enzymeL/ground_truth/particle_coordinates/a2.csv",
-            "/home/user/project/../Data/enzymeM/ground_truth/particle_coordinates/b1.csv",
-        ]
+            ("/home/user/project/../Data/enzymeL/ground_truth/"
+                "particle_coordinates/a1.csv"),
+            ("/home/user/project/../Data/enzymeL/ground_truth/"
+                "particle_coordinates/a2.csv"),
+            ("/home/user/project/../Data/enzymeM/ground_truth/"
+                "particle_coordinates/b1.csv"),]
 
         self.assertEqual(mrc, expected_mrc)
         self.assertEqual(csv, expected_csv)
@@ -202,8 +191,11 @@ class TestGetAllData(unittest.TestCase):
     @patch("utils.data_extractor")
     @patch("utils.os.getcwd")
     @patch("utils.os.listdir")
-
-    def test_find_data_skip_nones(self, mock_listdir, mock_getcwd, mock_extractor):
+    def test_find_data_skip_nones(
+            self,
+            mock_listdir,
+            mock_getcwd,
+            mock_extractor):
         # if data_extractor returns None, skip that enzyme
         # skip EnzymeN, return EnzymeO
 
@@ -211,7 +203,7 @@ class TestGetAllData(unittest.TestCase):
         mock_listdir.return_value = ["enzymeN", "enzymeO"]
 
         mock_extractor.side_effect = [
-            None,                            
+            None,
             (["b1.mrc"], ["b1.csv"])]
 
         mrc, csv = utils.find_all_data()
@@ -226,8 +218,11 @@ class TestGetAllData(unittest.TestCase):
     @patch("utils.data_extractor")
     @patch("utils.os.getcwd")
     @patch("utils.os.listdir")
-
-    def test_extractor_exception(self, mock_listdir, mock_getcwd, mock_extractor):
+    def test_extractor_exception(
+            self,
+            mock_listdir,
+            mock_getcwd,
+            mock_extractor):
         # If data_extractor raises an exception, skip that enzyme
         # skip EnzymeP, continue with EnzymeQ
 
@@ -246,12 +241,15 @@ class TestGetAllData(unittest.TestCase):
         self.assertEqual(
             csv,
             ["/cwd/../Data/enzymeQ/ground_truth/particle_coordinates/b1.csv"])
-        
+
     @patch("utils.data_extractor")
     @patch("utils.os.getcwd")
     @patch("utils.os.listdir")
-
-    def test_find_all_data_empty(self, mock_listdir, mock_getcwd, mock_extractor):
+    def test_find_all_data_empty(
+            self,
+            mock_listdir,
+            mock_getcwd,
+            mock_extractor):
         # reutrn empty lists if there are no files
 
         mock_getcwd.return_value = "/cwd"
