@@ -23,6 +23,11 @@ def collate(batch):
     followed by coordinate data
     """
 
+    # filter out images that did not transform properly
+    batch = [b for b in batch if b is not None and b[0] is not None]
+    if len(batch) == 0:
+        return None
+
     # Separate the mircographs and coordinates from the batch
     micrographs = [item[0] for item in batch]
     coordinates = [item[1] for item in batch]
@@ -63,10 +68,15 @@ class CryoEMDataset(Dataset):
                 micrograph = mrc.data.copy()
             # Apply transforms (if they exist)
             if self.transform:
-                micrograph = self.transform(micrograph)
+                try:
+                    micrograph = self.transform(micrograph)
+                except:
+                    print("could not transform",mrc_path)
+                    return None, None
 
         # Load the CSV data
         coordinates = pd.read_csv(csv_path)
         coordinates = torch.from_numpy(coordinates.values)
 
         return micrograph, coordinates
+

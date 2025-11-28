@@ -103,6 +103,8 @@ def data_extractor(enzyme_code):
     elif (len(image_names) > len(csv_names)):
         print(f"Enzyme {enzyme_code} has a mismatch. ",
               "Filtering micrographs now.")
+        total_csvs = len(csv_names)
+        total_images = len(image_names)
 
         # We need to weed out the mismatching files.
         # First, remove the ".csv" and ".mrc" from each file name
@@ -120,7 +122,11 @@ def data_extractor(enzyme_code):
         if len(image_names) != len(csv_names):
             print("There is STILL a different number of MRC and CSV files!",
                   " That's bad!")
-
+        print("Initial csvs",total_csvs)
+        print("Initial images",total_images)
+        print("Remaining csvs",len(csv_names))
+        print("Remaining images",len(image_names))
+	
         combined = (image_names, csv_names)
         return combined
 
@@ -222,7 +228,12 @@ def train_one_epoch(model,
     COORDINATES_INDEX = 1
 
     # Loop over all batches of data
-    for i, data_batch in enumerate(data_loader):
+    # for i, data_batch in enumerate(data_loader):
+    data_it = iter(data_loader)
+    for i in range(len(data_loader)):
+        data_batch = next(data_it)
+        if data_batch is None:
+            continue
         # 'inputs' are the micrograph image tensors with shape (B, C, H, W)
         # B: number of images in my mini-batch
         # C: number of color channels (for our images, this is 1)
