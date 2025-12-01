@@ -63,9 +63,14 @@ class CryoEMDataset(Dataset):
         # Catch warnings for MRC files with bad headers
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
+        # Error handling added for NoneType object without 'copy' attribute
 
             with mrcfile.open(mrc_path, permissive=True) as mrc:
-                micrograph = mrc.data.copy()
+                try:
+                    micrograph = mrc.data.copy()
+                except:
+                    print("Data load failed")
+                    return None, None
             # Apply transforms (if they exist)
             if self.transform:
                 try:
