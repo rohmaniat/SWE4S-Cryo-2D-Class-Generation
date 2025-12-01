@@ -57,3 +57,11 @@ assert_exit_code 2
 run configuration_check python src/predict.py --config test/func/standard_config.ini
 assert_in_stdout "Model loaded successfully!"
 assert_exit_code 0
+
+# Check Visualization Benchmark
+# Run vis.py benchmark-only to avoid opening a plotting window and assert expected output
+run vis_benchmark python src/visualization/vis.py --bench-size 1000 --bench-only --seed 123
+assert_in_stdout "Hash table benchmark (n=1000)"
+assert_in_stdout "Custom HashTable:"
+assert_in_stdout "Python dict"
+assert_exit_code 0
