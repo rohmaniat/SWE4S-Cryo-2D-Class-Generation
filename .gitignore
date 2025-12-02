@@ -4,3 +4,5 @@ __pycache__/
 *.err
 *.log
 *.tmp
+
+.snakemake/
