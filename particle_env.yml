@@ -10,4 +10,5 @@ dependencies:
   - pytorch
   - torchvision
   - snakemake
+  - seaborn
   - python=3.11
