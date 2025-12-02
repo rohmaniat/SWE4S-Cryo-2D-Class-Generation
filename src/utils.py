@@ -122,11 +122,11 @@ def data_extractor(enzyme_code):
         if len(image_names) != len(csv_names):
             print("There is STILL a different number of MRC and CSV files!",
                   " That's bad!")
-        print("Initial csvs",total_csvs)
-        print("Initial images",total_images)
-        print("Remaining csvs",len(csv_names))
-        print("Remaining images",len(image_names))
-	
+        print("Initial csvs", total_csvs)
+        print("Initial images", total_images)
+        print("Remaining csvs", len(csv_names))
+        print("Remaining images", len(image_names))
+
         combined = (image_names, csv_names)
         return combined
 
@@ -158,7 +158,7 @@ def find_all_data():
 
     # Run through for each available enzyme
     for enzyme in enzymes_available:
-        try:   
+        try:
             file_names = data_extractor(enzyme)
         except Exception as e:
             print(f"Extractor failed on enzyme {enzyme}")
