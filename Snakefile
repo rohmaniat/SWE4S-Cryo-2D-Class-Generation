@@ -7,24 +7,24 @@ SAMPLES = glob_wildcards("src/sample_data/{sample}.mrc").sample
 rule all:
     input:
         # Output images
-        expand("results/{sample}_output.png", sample=SAMPLES),
+        expand("src/visualization/{sample}_image.png", sample=SAMPLES),
         # Ground truth CSV files
-        expand("results/{sample}_ground_truth.csv", sample=SAMPLES)
+        expand("src/visualization/{sample}_table.csv", sample=SAMPLES)
 
 rule predict:
     input:
-        mrc="src/sample_data/{sample}.mrc"
+        mrc="src/sample_data/{sample}.mrc",
+        gt="src/sample_data/{sample}.csv"
     output:
-        csv="visualization/{sample}.csv",
-        img="visualization/{sample}_output.png",
-        gt="visualization/{sample}_ground_truth.csv"
+        csv="src/visualization/{sample}_table.csv",
+        img="src/visualization/{sample}_image.png"
     conda:
         "particle"
     shell:
         """
-        python predict.py \
+        python src/predict.py \
             --mrc_file {input.mrc} \
             --output_csv {output.csv} \
-            --output_image true \
-            --ground_truth_csv true
+            --output_image {output.img} \
+            --ground_truth_csv {input.gt}
         """
