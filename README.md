@@ -62,7 +62,7 @@ JLRparticle/
 |    │   └── utils.py
 |    ├── ssshtest
 |    └── test
-|        │   └── __init__.cpython-313.pyc
+|        ├── __init__.cpython-313.pyc
 |        ├── func
 |        │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.csv
 |        │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.mrc
