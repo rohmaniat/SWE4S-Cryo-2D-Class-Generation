@@ -28,20 +28,20 @@ The utils.py file is for utilities. It will contain functions like train() and t
 
 The predict.py file uses a trained model to predict particle locations!
 
-**These files/folders might no longer be needed:**
+There are separate folders in /src for models, predictions, and images of the data.
+
+There is a separate folder for slurm scripts. These are only needed for downloading the (massive) datasets to a compute cluster or training the model.
 
 The particle_picker.py file is where we will build, train, and test the network. It is designed to read the .mrc image files and .csv files and incorporating them into either training or testing data sets.
 
 The PyTorch Tutorial folder contains a great tutorial for how to use PyTorch. The website online also has some useful commentary about how it works.
 
-The controller.sh file should sort of be our control panel. We won't want to download the MASSIVE training data onto our local machines, so we'll somehow need to make this file call in that data onto the supercomputer. This file will also probably operate the particle_picker.py file (argparse, anyone?).
-
-Also slurm/sample.sh can be deleted
-
 ## ENVIRONMENT
 
 This package requires a few key dependencies, namely PyTorch, Pandas, and MRCFile. The environment is called "particle" and can be set up using the following commands:
+
 `mamba env create -f particle_env.yml`
+
 `mamba activate particle`
 
 ## Notes
@@ -64,8 +64,8 @@ JLRparticle/
 │   ├── models
 │   │   ├── (models)
 │   ├── predict.py
-│   ├── predictions
-│   │   └── (predictions)
+│   ├── visualization
+│   │   └── (visualizations)
 │   ├── slurm
 │   │   ├── pielcontroller.sh
 │   │   ├── sample.sh
