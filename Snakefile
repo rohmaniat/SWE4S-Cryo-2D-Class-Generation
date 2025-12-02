@@ -1,36 +1,30 @@
+# This Snakefile uses the pre-generated model and sample data to
+# predict particle coordinates for three files!
+
+# Get list of input MRC files (without extension)
+SAMPLES = glob_wildcards("src/sample_data/{sample}.mrc").sample
+
 rule all:
-    input: output_list
+    input:
+        # Output images
+        expand("results/{sample}_output.png", sample=SAMPLES),
+        # Ground truth CSV files
+        expand("results/{sample}_ground_truth.csv", sample=SAMPLES)
 
-rule download_data:
-    output: gdp = "src/IMF_GDP.csv",
-            co2 = "src/Agrofood_co2_emission.csv"
+rule predict:
+    input:
+        mrc="src/sample_data/{sample}.mrc"
+    output:
+        csv="visualization/{sample}.csv",
+        img="visualization/{sample}_output.png",
+        gt="visualization/{sample}_ground_truth.csv"
+    conda:
+        "particle"
     shell:
         """
-        curl -L "https://docs.google.com/uc?export=download&id=1Wytf3ryf9EtOwaloms8HEzLG0yjtRqxr" -o {output.co2}
-        curl -L "https://docs.google.com/uc?export=download&id=1tuoQ9UTW_XRKgBOBaTLtGXh8h0ytKvFp" -o {output.gdp}
-        """
-
-rule find_data:
-    input: gdp = "IMF_GDP.csv",
-           co2 = "Agrofood_co2_emission.csv"
-    output: "src/GDP_CO2_output_{country}.csv"
-    shell:
-        """
-        python3 src/fire_gdp.py \
-            --gdp_file {input.gdp} \
-                --co2_file {input.co2} \
-                    --country {wildcards.country}
-        """
-
-rule scatter_plot:
-    input: "src/GDP_CO2_output_{country}.csv"
-    output: "src/scatter_outputs/scatterplot_{country}.png"
-    shell:
-        """
-        python3 src/scatter.py \
-            --data_file {input} \
-                --out_file {output} \
-                    --title "GDP vs CO2 emissions" \
-                        --x_axis "annual GDP" \
-                            --y_axis "annual CO2 emission"
+        python predict.py \
+            --mrc_file {input.mrc} \
+            --output_csv {output.csv} \
+            --output_image true \
+            --ground_truth_csv true
         """
