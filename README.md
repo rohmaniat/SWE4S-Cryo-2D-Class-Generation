@@ -1,20 +1,24 @@
 # Overview
 
-This software is a neural network that is designed to be able to pick particles from Cryo-EM micrographs. This is an important step in the Cryo data pipeline. We will be training and testing our model on an excellent data set found in a Nature article.
+This software, JLR Particle, is a neural network that is designed to be able to pick particles from Cryo-EM micrographs. This is an important step in the Cryo data pipeline, as the quality of generated 2D classes is foundational for creating a high-resolution final structure.
 
-The paper providing the training and testing data can be found here: <https://www.nature.com/articles/s41597-023-02280-2>
-
-Their GitHub containing the data is here: <https://github.com/BioinfoMachineLearning/cryoppp>
+We will be training and testing our model on an excellent data set found in a Nature article. The paper providing the training and testing data can be found here: <https://www.nature.com/articles/s41597-023-02280-2> Their GitHub containing the data is here: <https://github.com/BioinfoMachineLearning/cryoppp>
 
 A group created a software using CryoPPP to train a neural network for particle picking (basically exactly what we are doing). Here's their GitHub: <https://github.com/jianlin-cheng/CryoTransformer/tree/main>
 
-## Setting up the file system
+## Getting Started
 
-I think I can make a Snakemake file for this eventually
+Training this software requires two different inputs -- micrograph files (.mrc) which are raw images from the microscope that does or does not contain particles of interest, and coordinate files (.csv) that contain the quantity and location of all particles from the ground truth sample.
 
-Outside of this repo, create a directory called Data/ with all micrograph data (organized into subdirectories called micrographs/ and ground_truth/particle_coordinates/). **This is essential for reading the files in the training step.**
+As a user, you would need to input .mrc files from microscope data as well as a configuration file (.ini) and a trained model (.pt). We have provided one of each in this repository. There is a specific file structure that is required for the training and testing code to read files properly. Outside of this repo, create a directory called Data/ with all micrograph data (organized into subdirectories called micrographs/ and ground_truth/particle_coordinates/).
 
-Should we specify a test that other users can run to validate our model?
+For those who want to test out this software, we have created an automated system using Snakemake
+
+- open up the environment file
+- mkdir ../Data/
+- download one data file (probably 10005)
+- test it using predict.py
+- make a plot and save it somewhere
 
 ## File Descriptions
 
@@ -24,6 +28,8 @@ The train.py file is meant for (you guessed it!) training!
 
 The utils.py file is for utilities. It will contain functions like train() and test(). We could also put the NN class def in here if we want.
 
+The predict.py file uses a trained model to predict particle locations!
+
 **These files/folders might no longer be needed:**
 
 The particle_picker.py file is where we will build, train, and test the network. It is designed to read the .mrc image files and .csv files and incorporating them into either training or testing data sets.
@@ -32,9 +38,11 @@ The PyTorch Tutorial folder contains a great tutorial for how to use PyTorch. Th
 
 The controller.sh file should sort of be our control panel. We won't want to download the MASSIVE training data onto our local machines, so we'll somehow need to make this file call in that data onto the supercomputer. This file will also probably operate the particle_picker.py file (argparse, anyone?).
 
-## BUILDING THE ENVIRONMENT
+Also slurm/sample.sh can be deleted
 
-The environment is called "particle" and can be set up using the following commands:
+## ENVIRONMENT
+
+This package requires a few key dependencies, namely PyTorch, Pandas, and MRCFile. The environment is called "particle" and can be set up using the following commands:
 `mamba env create -f particle_env.yml`
 `mamba activate particle`
 
@@ -59,17 +67,36 @@ The environment is called "particle" and can be set up using the following comma
 
 ``` plaintext
 JLRparticle/
-├── SWE4S-Cryo-2D-Class-Generation/    (This is the root directory from where we will run our scripts)
-│   ├── README.md
-│   ├── src/
-│   │   ├── utils.py
-│   │   ├── controller.sh
-│   │   ├── particle_env.yml
-│   │   ├── particle_picker.py
-│   │   └── ...
-│   ├── test/
-│   │   ├── func/
-│   │   │   └── func_testing.sh
-│   │   └── unit/
+├── cryo-picker.yml
+├── particle_env.yml
+├── README.md
+├── src
+│   ├── class_def.py
+│   ├── config.ini
+│   ├── images
+│   │   └── (images)
+│   ├── models
+│   │   ├── (models)
+│   ├── predict.py
+│   ├── predictions
+│   │   └── (predictions)
+│   ├── slurm
+│   │   ├── pielcontroller.sh
+│   │   ├── sample.sh
+│   │   └── train.sh
+│   ├── train.py
+│   └── utils.py
+├── ssshtest
+└── test
+    │   └── __init__.cpython-313.pyc
+    ├── func
+    │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.csv
+    │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.mrc
+    │   ├── func_testing.sh
+    │   └── standard_config.ini
+    └── unit
+        ├── epoch_training_tests.py
+        ├── fake_model.py
+        └── utils_tests.py
 └── Data/  (NOT in repo)
 ```
