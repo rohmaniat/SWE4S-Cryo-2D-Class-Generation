@@ -12,31 +12,31 @@ jobs:
       - uses: actions/checkout@v4
         with:
           lfs: true
-      - uses: mamba-org/setup-micromamba@v2
+      - uses: mamba-org/setup-micromamba@v1
         with:
           environment-file: particle_env.yml
-          init-shell: bash
+          cache-environment: true
       - run: bash test/func/func_testing.sh
-        shell: bash -l {0}
+        shell: micromamba-shell {0}
   
   run_unit_tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mamba-org/setup-micromamba@v2
+      - uses: mamba-org/setup-micromamba@v1
         with:
           environment-file: particle_env.yml
-          init-shell: bash
+          cache-environment: true
       - run: python test/unit/utils_tests.py
-        shell: bash -l {0}
+        shell: micromamba-shell {0}
   
   run_linter:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mamba-org/setup-micromamba@v2
+      - uses: mamba-org/setup-micromamba@v1
         with:
           environment-file: particle_env.yml
-          init-shell: bash
+          cache-environment: true
       - run: pycodestyle $(git ls-files "*.py" | grep -v "quickstart_tutorial.py" | grep -v "particle_picker.py")
-        shell: bash -l {0}
+        shell: micromamba-shell {0}
