@@ -98,8 +98,8 @@ def main():
 
 
 class HashTable:
-    """A minimal separate-chaining hash table for benchmarking/demonstration.
-
+    """
+    A minimal separate-chaining hash table for benchmarking/demonstration.
     Not intended to be feature-complete — simple insert/get semantics only.
     """
 
@@ -131,9 +131,9 @@ class HashTable:
 
 def benchmark_hash_structures(n=10000, seed=42):
     """Compare insert + lookup times for custom HashTable vs Python dict.
-
     Prints durations and a simple comparison summary (custom vs dict).
     """
+    
     random.seed(seed)
     keys = [random.randint(0, 10**9) for _ in range(n)]
     values = [random.random() for _ in range(n)]
