@@ -17,7 +17,8 @@ jobs:
           environment-file: particle_env.yml
           activate-environment: particle
           auto-activate-base: false
-          miniforge-variant: latest
+          miniforge-version: "24.3.0-0"
+          use-mamba: true
       - run: bash test/func/func_testing.sh
         shell: bash -l {0}
   
@@ -30,7 +31,8 @@ jobs:
           environment-file: particle_env.yml
           activate-environment: particle
           auto-activate-base: false
-          miniforge-variant: latest
+          miniforge-version: "24.3.0-0"
+          use-mamba: true
       - run: python test/unit/utils_tests.py
         shell: bash -l {0}
   
@@ -43,6 +45,7 @@ jobs:
           environment-file: particle_env.yml
           activate-environment: particle
           auto-activate-base: false
-          miniforge-variant: latest
+          miniforge-version: "24.3.0-0"
+          use-mamba: true
       - run: pycodestyle $(git ls-files "*.py" | grep -v "quickstart_tutorial.py" | grep -v "particle_picker.py")
         shell: bash -l {0}
