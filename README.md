@@ -12,13 +12,11 @@ Training this software requires two different inputs -- micrograph files (.mrc) 
 
 As a user, you would need to input .mrc files from microscope data as well as a configuration file (.ini) and a trained model (.pt). We have provided one of each in this repository. There is a specific file structure that is required for the training and testing code to read files properly. Outside of this repo, create a directory called Data/ with all micrograph data (organized into subdirectories called micrographs/ and ground_truth/particle_coordinates/).
 
-For those who want to test out this software, we have created an automated system using Snakemake
+For those who want to test out this software, we have created an automated system using Snakemake! Run using the following code:
 
-- open up the environment file
-- mkdir ../Data/
-- download one data file (probably 10005)
-- test it using predict.py
-- make a plot and save it somewhere
+``` snakemake --cores 1 --use-conda ```
+
+This file will use three tester .mrc files provided in sample_data and run a particle prediction using predict.py. The outputs will be stored in the "visualizations" folder.
 
 ## File Descriptions
 
@@ -45,18 +43,6 @@ Also slurm/sample.sh can be deleted
 This package requires a few key dependencies, namely PyTorch, Pandas, and MRCFile. The environment is called "particle" and can be set up using the following commands:
 `mamba env create -f particle_env.yml`
 `mamba activate particle`
-
-## TODO
-
-- Give more specificity to the particle_env.yml file. We want to make sure anyone can run it.
-- Make a bunch of UNIT tests. Let's make sure we really catch all our edge cases (let's implement some catches for exit codes).
-- Upload our code to Fiji and make sure it works on there.
-
-- Consider adding some timing methods to see if we can speed up the whole process.
-- Update the file descriptions in the README.md
-- Consider making an error calculation function. It could take our prediction.csv file and ground_truth.csv and calculate some kind of error.
-
-- can we write a section of the README that describes what code users should run?
 
 ## Notes
 
