@@ -27,5 +27,5 @@ rule predict:
             --output_csv {output.csv} \
             --output_image {output.img} \
             --ground_truth_csv {input.gt} \
-            --threshold 0.3
+            --threshold 0.1
         """
