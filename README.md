@@ -20,69 +20,57 @@ This file will use three tester .mrc files provided in sample_data and run a par
 
 ## File Descriptions
 
-The class_def.py file provides the class definition for the Dataset object.
-
-The train.py file is meant for (you guessed it!) training!
-
-The utils.py file is for utilities. It will contain functions like train() and test(). We could also put the NN class def in here if we want.
+The train.py file is meant for (you guessed it!) training! It outputs a model.pt file.
 
 The predict.py file uses a trained model to predict particle locations!
 
-There are separate folders in /src for models, predictions, and images of the data.
+The class_def.py file provides the class definition for the Dataset object.
+
+The utils.py file is for utilities. It has a few useful functions (including the find all data function).
+
+There are separate folders in src/ for models, predictions, and images of the data.
 
 There is a separate folder for slurm scripts. These are only needed for downloading the (massive) datasets to a compute cluster or training the model.
 
-The particle_picker.py file is where we will build, train, and test the network. It is designed to read the .mrc image files and .csv files and incorporating them into either training or testing data sets.
-
-The PyTorch Tutorial folder contains a great tutorial for how to use PyTorch. The website online also has some useful commentary about how it works.
-
-## ENVIRONMENT
-
-This package requires a few key dependencies, namely PyTorch, Pandas, and MRCFile. The environment is called "particle" and can be set up using the following commands:
-
-`mamba env create -f particle_env.yml`
-
-`mamba activate particle`
-
 ## Notes
 
-- In the PyTorch tutorial, they use the nn.CrossEntropyLoss() function. This is a good loss function for classifying images. Since we'll first need to do particle picking, I think we should start with a loss function like nn.MSELoss() or nn.L1Loss() (which does mean squared error or absolute value error for regression objectives like particle picking). Once we've got that going and once we can do the image slicing step, then we could start looking at the nn.CrossEntropyLoss() function.
 - ALL FILES expect you to run them from the root directory (you should type bash src/controller.sh to execute the controller.sh file)
 - Some of the MRC files have bad headers. The permissive=True flag when opening the mrc file should be able to get past this. I've wrapped it with a warnings catch so we aren't bothered with those.
 - The folder layout looks like this:
 
 ``` plaintext
 JLRparticle/
-├── cryo-picker.yml
-├── particle_env.yml
-├── README.md
-├── src
-│   ├── class_def.py
-│   ├── config.ini
-│   ├── images
-│   │   └── (images)
-│   ├── models
-│   │   ├── (models)
-│   ├── predict.py
-│   ├── visualization
-│   │   └── (visualizations)
-│   ├── slurm
-│   │   ├── pielcontroller.sh
-│   │   ├── sample.sh
-│   │   └── train.sh
-│   ├── train.py
-│   └── utils.py
-├── ssshtest
-└── test
-    │   └── __init__.cpython-313.pyc
-    ├── func
-    │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.csv
-    │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.mrc
-    │   ├── func_testing.sh
-    │   └── standard_config.ini
-    └── unit
-        ├── epoch_training_tests.py
-        ├── fake_model.py
-        └── utils_tests.py
+├── SWE4S-Cryo-2D-Class-Generation
+|    ├── cryo-picker.yml
+|    ├── particle_env.yml
+|    ├── README.md
+|    ├── src
+|    │   ├── class_def.py
+|    │   ├── config.ini
+|    │   ├── images
+|    │   │   └── (images)
+|    │   ├── models
+|    │   │   ├── (models)
+|    │   ├── predict.py
+|    │   ├── visualization
+|    │   │   └── (visualizations)
+|    │   ├── slurm
+|    │   │   ├── pielcontroller.sh
+|    │   │   ├── sample.sh
+|    │   │   └── train.sh
+|    │   ├── train.py
+|    │   └── utils.py
+|    ├── ssshtest
+|    └── test
+|        │   └── __init__.cpython-313.pyc
+|        ├── func
+|        │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.csv
+|        │   ├── EXAMPLE_Falcon_2012_06_12-14_33_35_0.mrc
+|        │   ├── func_testing.sh
+|        │   └── standard_config.ini
+|        └── unit
+|            ├── epoch_training_tests.py
+|            ├── fake_model.py
+|            └── utils_tests.py
 └── Data/  (NOT in repo)
 ```
