@@ -1,5 +1,5 @@
 import torch
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split
 from torchvision import transforms
 from class_def import CryoEMDataset
 from class_def import collate
@@ -20,10 +20,12 @@ if __name__ == "__main__":
     mrc_paths, csv_paths = utils.find_all_data()
     print(f"Found {len(mrc_paths)} total samples.")
 
+    img_size = 1024
+
     # Build the transformation pipeline
     data_transform = transforms.Compose([
         transforms.ToPILImage(),
-        transforms.Resize((800, 800), antialias=True),  # Resize images
+        transforms.Resize((img_size, img_size), antialias=True),
         transforms.Grayscale(num_output_channels=1),
         transforms.ToTensor(),  # This converts the Numpy array to a Tensor
     ])
@@ -35,13 +37,31 @@ if __name__ == "__main__":
         transform=data_transform
     )
 
+    train_size = int(0.9 * len(cryo_dataset))
+    val_size = len(cryo_dataset) - train_size
+    train_dataset, val_dataset = random_split(
+        cryo_dataset,
+        [train_size, val_size],
+        generator=torch.Generator().manual_seed(42)
+    )
+
+    print(f"Training samples: {train_size}, Validation samples: {val_size}")
+
     # Build the dataloader
     data_loader = DataLoader(cryo_dataset,
-                             batch_size=2,
+                             batch_size=4,  # can decrease to 2
                              shuffle=True,
                              collate_fn=collate,
                              num_workers=0
                              )
+
+    val_loader = DataLoader(
+        val_dataset,
+        batch_size=4,
+        shuffle=False,
+        collate_fn=collate,
+        num_workers=0
+    )
 
     # Load in a pre-trained model (transfer learning for the win!)
     image_mean = [0.449]
@@ -63,7 +83,6 @@ if __name__ == "__main__":
     )
 
     # Get the number of input features for the classifier.
-    # We can't use all 4096x4096 pixels and pass them into the NN.
     # There already exists an internal step that converts the image into a
     # feature vector.
     in_features = model.roi_heads.box_predictor.cls_score.in_features
@@ -84,16 +103,21 @@ if __name__ == "__main__":
     params = [p for p in model.parameters() if p.requires_grad]
 
     # Create the optimizer. Adam is a good, modern default
-    # The learning rate (lr) dictates how quickly the model will change.
-    # Setting a low lr is good for fine-tuning a model.
-    optimizer = optim.Adam(params, lr=0.0001)
+    optimizer = optim.Adam(params, lr=0.0001, weight_decay=0.0005)
 
-    # The loss is calculated inside the model when we pass it targets,
-    # so we don't need a separate criterion function.
     criterion = None
 
+    # scheduler optimizes learning rate
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer,
+        mode='min',
+        factor=0.5,
+        patience=3,
+        verbose=True
+    )
+
     # THE MAIN TRAINING LOOP
-    num_epochs = 2
+    num_epochs = 10
     print(f"\nStarting training for {num_epochs} epochs...")
 
     for epoch in range(num_epochs):
@@ -109,7 +133,93 @@ if __name__ == "__main__":
         print(f"  -- Epoch {epoch + 1} of {num_epochs} complete. ",
               "Average epoch loss: {avg_loss}. --")
 
+        model.eval()
+        val_loss = 0.0
+        num_val_batches = 0
+
+        print(f"  Running validation...")
+
+        with torch.no_grad():
+            for val_batch in val_loader:
+                if val_batch is None:
+                    continue
+
+                val_images = val_batch[0].to(device)
+                val_coords = val_batch[1]
+
+                # Build targets (same logic as training)
+                val_targets = []
+                valid_val_images = []
+
+                for img_tensor, coords_tensor in zip(val_images, val_coords):
+                    coords_tensor = coords_tensor.to(device)
+
+                    if len(coords_tensor) == 0:
+                        continue
+
+                    boxes = torch.zeros((len(coords_tensor), 4),
+                                        dtype=torch.float32,
+                                        device=device)
+
+                    box_size = 64
+                    boxes[:, 0] = coords_tensor[:, 0] - box_size // 2
+                    boxes[:, 1] = coords_tensor[:, 1] - box_size // 2
+                    boxes[:, 2] = coords_tensor[:, 0] + box_size // 2
+                    boxes[:, 3] = coords_tensor[:, 1] + box_size // 2
+
+                    # FIX: Correct clamping
+                    max_coord_x = img_size - 1
+                    max_coord_y = img_size - 1
+                    boxes[:, 0::2] = boxes[:, 0::2].clamp(min=0,
+                                                          max=max_coord_x)
+                    boxes[:, 1::2] = boxes[:, 1::2].clamp(min=0,
+                                                          max=max_coord_y)
+
+                    valid_mask = (
+                        boxes[:, 2] > boxes[:, 0]) & (
+                            boxes[:, 3] > boxes[:, 1])
+                    boxes = boxes[valid_mask]
+
+                    if len(boxes) == 0:
+                        continue
+
+                    labels = torch.ones((len(boxes),),
+                                        dtype=torch.int64,
+                                        device=device)
+                    val_targets.append({'boxes': boxes, 'labels': labels})
+                    valid_val_images.append(img_tensor)
+
+                if len(valid_val_images) == 0:
+                    continue
+
+                val_images_stacked = torch.stack(valid_val_images)
+
+                try:
+                    loss_dict = model(val_images_stacked, val_targets)
+                    losses = sum(loss for loss in loss_dict.values())
+                    val_loss += losses.item()
+                    num_val_batches += 1
+                except Exception as e:
+                    continue
+
+        if num_val_batches > 0:
+            avg_val_loss = val_loss / num_val_batches
+            print(f"  Validation loss: {avg_val_loss:.4f}")
+
+            # Update learning rate based on validation loss
+            scheduler.step(avg_val_loss)
+
+            # Save best model
+            if avg_val_loss < best_val_loss:
+                best_val_loss = avg_val_loss
+                best_model_path = "src/models/best_model.pth"
+                torch.save(model.state_dict(), best_model_path)
+                print(f"  ** New best model saved! **")
+
+        model.train()  # Switch back to training mode
+
     print(f"\n---- Training finished! ----\n")
+    print(f"Best validation loss: {best_val_loss:.4f}\n")
 
     # Now save the model
     model_name = "new_model"
