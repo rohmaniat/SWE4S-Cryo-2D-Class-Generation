@@ -260,7 +260,6 @@ if __name__ == "__main__":
         scale_y = orig_h / 800.0
 
         # Get center of boxes [x1, y1, x2, y2]
-        # FIXME: Remove these magic numbers
         center_x = (final_boxes[:, 0] + final_boxes[:, 2]) / 2
         center_y = (final_boxes[:, 1] + final_boxes[:, 3]) / 2
 
@@ -275,7 +274,7 @@ if __name__ == "__main__":
             'confidence': final_scores
         }
         df = pd.DataFrame(df_data)
-        df.to_csv(args.output_csv, index=False)
+        # df.to_csv(args.output_csv, index=False)
         print(f"Success! Saved {len(df)} particle coordinates",
               f"to {args.output_csv}")
 
