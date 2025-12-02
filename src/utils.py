@@ -223,7 +223,7 @@ def train_one_epoch(model,
           " batches) -----")
 
     # Set up a few constants
-    batches_before_printing = 3
+    batches_before_printing = 10
     STACKED_MICROGRAPH_IMAGES_INDEX = 0
     COORDINATES_INDEX = 1
 
@@ -274,14 +274,14 @@ def train_one_epoch(model,
                 boxes[:, 2] = coords_tensor[:, 0] + box_size // 2  # x_max
                 boxes[:, 3] = coords_tensor[:, 1] + box_size // 2  # y_max
             else:
-                pass
+                continue
 
             # Clamp boxes to be within image bounds
             # (remember we set our image size to 4096)
             # Select all x coordinates (x_min and x_max)
             boxes[:, 0::2] = boxes[:, 0::2].clamp(min=0, max=max_coord_x)
             # Select all y coordinates (y_min and y_max)
-            boxes[:, 1::3] = boxes[:, 1::3].clamp(min=0, max=max_coord_y)
+            boxes[:, 1::2] = boxes[:, 1::2].clamp(min=0, max=max_coord_y)
 
             # Filter out boxes that have zero area
             # (may have resulted from clamping)
@@ -323,7 +323,6 @@ def train_one_epoch(model,
 
         # Now do the actual training
         try:
-            # This is the standard way to train torchvision detection models
             loss_dict = model(inputs, targets)
 
             # The returned loss_dict may contain multiple losses.
@@ -337,12 +336,15 @@ def train_one_epoch(model,
                 continue
 
         except Exception as e:
-            print(f"       Batch {i + 1} failed with error: {e}")
+            print(f"Batch {i + 1} failed with error: {e}")
             continue
 
         # Backward pass: this computes the gradient of the 'losses' tensor
         # with respect to all model parameters (weights and biases).
         losses.backward()
+
+        # gradient clipping
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
 
         # Update weights
         optimizer.step()
@@ -351,6 +353,7 @@ def train_one_epoch(model,
         batch_loss = losses.item()
         running_loss += batch_loss
         total_loss += batch_loss
+        successful_batches += 1
 
         # Print loss statistics every couple of batches
         if (i + 1) % batches_before_printing == 0:
@@ -358,6 +361,10 @@ def train_one_epoch(model,
             print(f"    [Batch {i + 1:5d} / {len(data_loader)}] running ,"
                   f"loss: {avg_running_loss:.4f}")
             running_loss = 0.0  # Reset the running loss tracker
+
+    if successful_batches == 0:
+        print("WARNING: No successful batches in this epoch!")
+        return float('inf')
 
     # Return average loss for the epoch
     avg_epoch_loss = total_loss / len(data_loader)
