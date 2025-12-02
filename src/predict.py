@@ -151,6 +151,7 @@ if __name__ == "__main__":
         + "a provided model."
     )
     parser.add_argument("--config", type=str,
+                        default="config.ini",
                         help="Path to a .ini configuration file.")
     parser.add_argument("--mrc_file", type=str,
                         help="Path to the input .mrc file.")

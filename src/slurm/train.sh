@@ -15,7 +15,7 @@
 '''
 This script is for training the model using SLURM job submission.
 It will use all available data in the ../Data/ directory for now.
-The output is... we don/t know yet!
+The output is a model file (.pt) that can be used for predictions later.
 '''
 
 echo Starting training job %j on $(hostname) at $(date)
