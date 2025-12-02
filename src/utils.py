@@ -15,12 +15,12 @@ def pull_micrographs(enzyme_code):
                 # print(filename)
                 micrograph_filecount += 1
     except FileNotFoundError:
-        print("The enzyme code could not be accessed.")
-        sys.exit(2)
+        print(f"The enzyme code {enzyme_code} could not be accessed.")
+        return None
 
     if not micrograph_filecount:
-        print("There were no micrograph files found.")
-        return ValueError
+        print(f"There were no micrograph files for {enzyme_code} found.")
+        return None
 
     return micrograph_filecount
 
@@ -122,17 +122,17 @@ def data_extractor(enzyme_code):
         if len(image_names) != len(csv_names):
             print("There is STILL a different number of MRC and CSV files!",
                   " That's bad!")
-        print("Initial csvs",total_csvs)
-        print("Initial images",total_images)
-        print("Remaining csvs",len(csv_names))
-        print("Remaining images",len(image_names))
-	
+        print("Initial csvs", total_csvs)
+        print("Initial images", total_images)
+        print("Remaining csvs", len(csv_names))
+        print("Remaining images", len(image_names))
+
         combined = (image_names, csv_names)
         return combined
 
     # If there are more csv files than mrc files, I dunno what
     # the heck is going on
-    # TODO: I have it return none so the train ignores those files, but I
+    # TODO: I have it return none so the training ignores those files, but I
     # think I can do better in the future
     else:
         print(f"Take a look at enzyme {enzyme_code}. There are fewer MRC ",
@@ -158,7 +158,7 @@ def find_all_data():
 
     # Run through for each available enzyme
     for enzyme in enzymes_available:
-        try:   
+        try:
             file_names = data_extractor(enzyme)
         except Exception as e:
             print(f"Extractor failed on enzyme {enzyme}")

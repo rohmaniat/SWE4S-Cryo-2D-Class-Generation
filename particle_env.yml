@@ -9,4 +9,5 @@ dependencies:
   - pycodestyle
   - pytorch
   - torchvision
+  - seaborn
   - python=3.11

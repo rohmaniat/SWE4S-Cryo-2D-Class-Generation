@@ -32,9 +32,13 @@ def plot_annot_mrc(mrc_file_path, particle_annotation):
     plt.imshow(mrc_data, cmap="gray")
     plt.grid(False)
 
-    if "Y-Coordinate" not in annot.columns or "X-Coordinate" not in annot.columns:
+    if (
+        "Y-Coordinate" not in annot.columns
+        or "X-Coordinate" not in annot.columns
+    ):
         raise ValueError(
-            "Annotation CSV must contain 'X-Coordinate' and 'Y-Coordinate' columns"
+            "Annotation CSV must contain 'X-Coordinate' and "
+            "'Y-Coordinate' columns"
         )
 
     # Adjust Y for image coordinate system used by imshow
@@ -51,14 +55,16 @@ def main():
         "--mrc",
         help="Path to the MRC file",
         default=(
-            "/Users/lucindashaffer/Documents/10005/micrographs/stack_0002_2x_SumCorr.mrc"
+            "/Users/lucindashaffer/Documents/10005/micrographs/"
+            "stack_0002_2x_SumCorr.mrc"
         ),
     )
     parser.add_argument(
         "--csv",
         help="Path to the annotation CSV",
         default=(
-            "/Users/lucindashaffer/Documents/10005/ground_truth/particle_coordinates/stack_0002_2x_SumCorr.csv"
+            "/Users/lucindashaffer/Documents/10005/ground_truth/"
+            "particle_coordinates/stack_0002_2x_SumCorr.csv"
         ),
     )
     parser.add_argument(
@@ -82,7 +88,7 @@ def main():
     args = parser.parse_args()
 
     # Notebook-like visual defaults
-    sns.set(style="whitegrid", context="notebook", palette="deep")
+    sns.set_theme(style="whitegrid", context="notebook", palette="deep")
     warnings.filterwarnings("ignore")
     plt.rcParams.update({"figure.figsize": (10, 6), "figure.dpi": 100})
     pd.set_option("display.max_columns", 200)
@@ -98,8 +104,8 @@ def main():
 
 
 class HashTable:
-    """A minimal separate-chaining hash table for benchmarking/demonstration.
-
+    """
+    A minimal separate-chaining hash table for benchmarking/demonstration.
     Not intended to be feature-complete — simple insert/get semantics only.
     """
 
@@ -131,9 +137,9 @@ class HashTable:
 
 def benchmark_hash_structures(n=10000, seed=42):
     """Compare insert + lookup times for custom HashTable vs Python dict.
-
     Prints durations and a simple comparison summary (custom vs dict).
     """
+
     random.seed(seed)
     keys = [random.randint(0, 10**9) for _ in range(n)]
     values = [random.random() for _ in range(n)]

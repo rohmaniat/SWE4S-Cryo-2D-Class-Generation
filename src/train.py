@@ -53,8 +53,6 @@ if __name__ == "__main__":
     )
 
     # This pre-existing model was trained on colored data.
-    # Our images are grayscaled, so we need to change the input to only
-    # one channel.
     model.backbone.body.conv1 = torch.nn.Conv2d(
         1,  # This is in_channels (set to 1 because we have grayscale images)
         64,  # out_channels
@@ -114,8 +112,7 @@ if __name__ == "__main__":
     print(f"\n---- Training finished! ----\n")
 
     # Now save the model
-    model_name = "my_model_2"
-    # TODO: need a way of changing model name to avoid overwriting
+    model_name = "new_model"
     model_save_path = "src/models/" + model_name
     torch.save(model.state_dict(), model_save_path)
     print(f"Model saved to: {model_save_path}")

@@ -68,15 +68,15 @@ class CryoEMDataset(Dataset):
             with mrcfile.open(mrc_path, permissive=True) as mrc:
                 try:
                     micrograph = mrc.data.copy()
-                except:
+                except Exception as e:
                     print("Data load failed")
                     return None, None
             # Apply transforms (if they exist)
             if self.transform:
                 try:
                     micrograph = self.transform(micrograph)
-                except:
-                    print("could not transform",mrc_path)
+                except Exception as e:
+                    print("could not transform", mrc_path)
                     return None, None
 
         # Load the CSV data
@@ -84,4 +84,3 @@ class CryoEMDataset(Dataset):
         coordinates = torch.from_numpy(coordinates.values)
 
         return micrograph, coordinates
-
