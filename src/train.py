@@ -53,8 +53,6 @@ if __name__ == "__main__":
     )
 
     # This pre-existing model was trained on colored data.
-    # Our images are grayscaled, so we need to change the input to only
-    # one channel.
     model.backbone.body.conv1 = torch.nn.Conv2d(
         1,  # This is in_channels (set to 1 because we have grayscale images)
         64,  # out_channels
