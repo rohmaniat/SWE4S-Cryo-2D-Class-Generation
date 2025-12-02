@@ -26,5 +26,6 @@ rule predict:
             --mrc_file {input.mrc} \
             --output_csv {output.csv} \
             --output_image {output.img} \
-            --ground_truth_csv {input.gt}
+            --ground_truth_csv {input.gt} \
+            --threshold 0.3
         """
