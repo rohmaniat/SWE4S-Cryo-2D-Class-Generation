@@ -217,6 +217,7 @@ def train_one_epoch(model,
     # 'total_loss' adds up the loss for the entire epoch
     running_loss = 0.0
     total_loss = 0.0
+    successful_batches = 0
 
     # Print epoch header
     print(f"\n----- Epoch {epoch_num + 1} (training with {len(data_loader)}",
