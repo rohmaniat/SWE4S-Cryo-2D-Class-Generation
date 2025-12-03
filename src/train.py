@@ -222,7 +222,7 @@ if __name__ == "__main__":
     print(f"Best validation loss: {best_val_loss:.4f}\n")
 
     # Now save the model
-    model_name = "new_model"
+    model_name = "new_model_3"
     model_save_path = "src/models/" + model_name
     torch.save(model.state_dict(), model_save_path)
     print(f"Model saved to: {model_save_path}")
