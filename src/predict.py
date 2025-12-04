@@ -17,7 +17,7 @@ def load_model(model_path, device):
     # Remake the model architecture
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
         weights=None,  # We're loading our own weights
-        weights_backbone=None,
+        weights_only=False,
         image_mean=[0.449],
         image_std=[0.226]
     )

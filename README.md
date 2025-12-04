@@ -4,8 +4,6 @@ This software, JLR Particle, is a neural network that is designed to be able to 
 
 We will be training and testing our model on an excellent data set found in a Nature article. The paper providing the training and testing data can be found here: <https://www.nature.com/articles/s41597-023-02280-2> Their GitHub containing the data is here: <https://github.com/BioinfoMachineLearning/cryoppp>
 
-A group created a software using CryoPPP to train a neural network for particle picking (basically exactly what we are doing). Here's their GitHub: <https://github.com/jianlin-cheng/CryoTransformer/tree/main>
-
 ## Getting Started
 
 Training this software requires two different inputs -- micrograph files (.mrc) which are raw images from the microscope that does or does not contain particles of interest, and coordinate files (.csv) that contain the quantity and location of all particles from the ground truth sample.
@@ -14,9 +12,17 @@ As a user, you would need to input .mrc files from microscope data as well as a 
 
 For those who want to test out this software, we have created an automated system using Snakemake! Run using the following code:
 
+``` conda env create -f particle_env.yml ```
+
+``` conda activate particle ```
+
+``` mamba install -c conda-forge -c bioconda -c nodefaults snakemake ```
+
 ``` snakemake --cores 1 --use-conda ```
 
-This file will use three tester .mrc files provided in sample_data and run a particle prediction using predict.py. The outputs will be stored in the "visualizations" folder.
+Some testers report issues with the model file (my_model.pt) when cloning the repository. If the snakemake is returning errors related to the model file, I would recommend downloading the model file again and manually adding it to the repo, or installing git LFS ``` brew install git lfs ``` ``` git lfs install ``` to handle the larger model file.
+
+This file will use three tester .mrc files provided in sample_data and run a particle prediction using predict.py. The outputs will be stored in the "visualizations" folder. At the moment, this model is weak and relatively inaccurate. More training is needed for better predictions, but these tests serve as a proof-of-concept for our software.
 
 ## File Descriptions
 
