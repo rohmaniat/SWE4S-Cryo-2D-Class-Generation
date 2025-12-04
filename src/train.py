@@ -139,11 +139,11 @@ if __name__ == "__main__":
 
         # training logs after each epoch to calculate loss
         checkpoint = {
-        "epoch": epoch,
-        "model_state": model.state_dict(),
-        "optimizer_state": optimizer.state_dict(),
-        "loss": avg_loss,
-        }
+            "epoch": epoch,
+            "model_state": model.state_dict(),
+            "optimizer_state": optimizer.state_dict(),
+            "loss": avg_loss,
+            }
 
         torch.save(checkpoint, "src/checkpoint_epoch.pth")
 
