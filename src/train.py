@@ -137,6 +137,16 @@ if __name__ == "__main__":
         val_loss = 0.0
         num_val_batches = 0
 
+        # training logs after each epoch to calculate loss
+        checkpoint = {
+        "epoch": epoch,
+        "model_state": model.state_dict(),
+        "optimizer_state": optimizer.state_dict(),
+        "loss": avg_loss,
+        }
+
+        torch.save(checkpoint, "src/checkpoint_epoch.pth")
+
         print(f"  Running validation...")
 
         with torch.no_grad():

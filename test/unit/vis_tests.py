@@ -1,11 +1,12 @@
-from visualization import vis
 import sys
 import os
 import io
 import unittest
 from unittest import mock
 
-sys.path.append('src')  # allow importing the package under test
+sys.path.append('src/')  # noqa
+
+import visualization.vis as vis
 
 
 class TestHashTable(unittest.TestCase):
